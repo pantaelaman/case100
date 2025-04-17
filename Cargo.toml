@@ -1,0 +1,15 @@
+[package]
+name = "ase100emu"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+color-eyre = "0.6.3"
+crossterm = "0.29.0"
+ratatui = "0.29.0"
+ratatui-explorer = "0.1.4"
+regex = "1.11.1"
+sdl3 = "0.14.24"
+tokio = { version = "1.44.2", features = ["rt-multi-thread", "fs", "net", "sync", "rt", "io-util", "full"] }
+tokio-macros = "2.5.0"
+tui-input = "0.11.1"
