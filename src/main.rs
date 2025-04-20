@@ -1,7 +1,12 @@
 use core::Environment;
-use std::{fs::File, path::PathBuf};
+use std::{
+  fs::File, path::PathBuf, sync::atomic::Ordering, thread::JoinHandle,
+  time::SystemTime,
+};
 
-use color_eyre::eyre;
+use color_eyre::eyre::{self, OptionExt};
+use executor::ExecutorReport;
+use rat_ftable::{selection::NoSelection, Table, TableState};
 use ratatui::{
   crossterm::event,
   layout::{Constraint, Direction, Layout, Margin},
@@ -10,19 +15,49 @@ use ratatui::{
   DefaultTerminal, Frame,
 };
 use ratatui_explorer::{FileExplorer, Theme};
+use tokio_stream::StreamExt;
 use tui_input::{backend::crossterm::EventHandler, Input};
 
 mod core;
 mod devices;
 mod executor;
+mod memtable;
+
+fn setup_logger() -> eyre::Result<()> {
+  let colors = fern::colors::ColoredLevelConfig::default();
+  fern::Dispatch::new()
+    .format(move |out, message, record| {
+      out.finish(format_args!(
+        "[{} {} {}] {}",
+        humantime::format_rfc3339_seconds(SystemTime::now()),
+        colors.color(record.level()),
+        record.target(),
+        message
+      ))
+    })
+    .level(log::LevelFilter::Debug)
+    .chain(fern::log_file("output.log")?)
+    .apply()?;
+
+  Ok(())
+}
 
 #[tokio::main]
 async fn main() -> eyre::Result<()> {
   color_eyre::install()?;
+  setup_logger()?;
+
+  log::info!("Logging harness setup");
 
   let terminal = ratatui::init();
-  let result = run(terminal);
+  let (exec, executor_handler) =
+    executor::Executor::new(Environment::default());
+
+  let _exec_runner = tokio::spawn(exec.process());
+  let result = run(terminal, executor_handler).await;
+
   ratatui::restore();
+
   result
 }
 
@@ -72,7 +107,15 @@ impl MenuActive {
   }
 }
 
-fn run(mut terminal: DefaultTerminal) -> eyre::Result<()> {
+enum EventUnion {
+  Crossterm(event::Event),
+  Executor(ExecutorReport),
+}
+
+async fn run(
+  mut terminal: DefaultTerminal,
+  mut executor_handler: executor::ExecutorHandler,
+) -> eyre::Result<()> {
   let theme = Theme::default();
   let mut file_explorer = FileExplorer::with_theme(theme)?;
   let mut state = MenuState::Normal;
@@ -82,144 +125,245 @@ fn run(mut terminal: DefaultTerminal) -> eyre::Result<()> {
   let mut break_input = tui_input::Input::default();
   let mut watch_input = tui_input::Input::default();
   let mut environment = Environment::default();
+  let mut memtable_state = TableState::new();
+  let mut request_redraw = true;
+  let mut term_event_stream = std::pin::pin! {async_stream::stream! {
+    loop {
+      yield event::read();
+    }
+  }};
 
-  loop {
+  let result = loop {
     match state {
       MenuState::Normal => {
-        terminal.draw(|f| {
-          let major_layout = Layout::default()
-            .direction(Direction::Vertical)
-            .constraints(vec![Constraint::Length(12), Constraint::Fill(1)])
-            .split(f.area());
+        if request_redraw {
+          terminal.draw(|f| {
+            let major_layout = Layout::default()
+              .direction(Direction::Vertical)
+              .constraints(vec![Constraint::Length(12), Constraint::Fill(1)])
+              .split(f.area());
 
-          let buf = f.buffer_mut();
+            let control_block = Block::bordered();
+            let control_area = control_block.inner(major_layout[0]);
+            f.render_widget(control_block, major_layout[0]);
 
-          let control_block = Block::bordered();
-          let control_area = control_block.inner(major_layout[0]);
-          control_block.render(major_layout[0], buf);
+            let control_layout = Layout::default()
+              .direction(Direction::Vertical)
+              .constraints(vec![
+                Constraint::Length(3),
+                Constraint::Length(3),
+                Constraint::Length(4),
+              ])
+              .split(control_area);
 
-          let control_layout = Layout::default()
-            .direction(Direction::Vertical)
-            .constraints(vec![
-              Constraint::Length(3),
-              Constraint::Length(3),
-              Constraint::Length(4),
-            ])
-            .split(control_area);
+            let top_layout = Layout::default()
+              .direction(Direction::Horizontal)
+              .constraints(vec![Constraint::Length(16), Constraint::Fill(1)])
+              .split(control_layout[0]);
 
-          let top_layout = Layout::default()
-            .direction(Direction::Horizontal)
-            .constraints(vec![Constraint::Length(16), Constraint::Fill(1)])
-            .split(control_layout[0]);
+            f.render_widget(
+              make_button("Assemble", "[a]", &active, MenuActive::Assemble),
+              top_layout[0],
+            );
 
-          make_button("Assemble", "[a]", &active, MenuActive::Assemble)
-            .render(top_layout[0], buf);
+            f.render_widget(
+              make_button(
+                filepath.file_name().and_then(|f| f.to_str()).unwrap_or(""),
+                "MIF File [f]",
+                &active,
+                MenuActive::File,
+              ),
+              top_layout[1],
+            );
 
-          make_button(
-            filepath.file_name().and_then(|f| f.to_str()).unwrap_or(""),
-            "MIF File [f]",
-            &active,
-            MenuActive::File,
-          )
-          .render(top_layout[1], buf);
+            let middle_layout = Layout::default()
+              .direction(Direction::Horizontal)
+              .constraints(vec![
+                Constraint::Length(16),
+                Constraint::Length(16),
+                Constraint::Length(16),
+                Constraint::Length(16),
+                Constraint::Length(16),
+                Constraint::Length(16),
+                Constraint::Length(6),
+                Constraint::Fill(1),
+              ])
+              .split(control_layout[1]);
 
-          let middle_layout = Layout::default()
-            .direction(Direction::Horizontal)
-            .constraints(vec![
-              Constraint::Length(16),
-              Constraint::Length(16),
-              Constraint::Length(16),
-              Constraint::Length(16),
-              Constraint::Length(16),
-              Constraint::Length(16),
-              Constraint::Length(6),
-              Constraint::Fill(1),
-            ])
-            .split(control_layout[1]);
+            f.render_widget(
+              make_button("Load", "[l]", &active, MenuActive::Load),
+              middle_layout[0],
+            );
 
-          make_button("Load", "[l]", &active, MenuActive::Load)
-            .render(middle_layout[0], buf);
+            f.render_widget(
+              make_button("Run", "[r]", &active, MenuActive::Run),
+              middle_layout[1],
+            );
 
-          make_button("Run", "[r]", &active, MenuActive::Run)
-            .render(middle_layout[1], buf);
+            f.render_widget(
+              make_button("Reset", "[ESC]", &active, MenuActive::Reset),
+              middle_layout[2],
+            );
 
-          make_button("Reset", "[ESC]", &active, MenuActive::Reset)
-            .render(middle_layout[2], buf);
+            f.render_widget(
+              make_button(
+                steps_input.value(),
+                "Steps",
+                &active,
+                MenuActive::Steps,
+              ),
+              middle_layout[3],
+            );
+            f.render_widget(
+              make_button(
+                break_input.value(),
+                "Break",
+                &active,
+                MenuActive::Break,
+              ),
+              middle_layout[4],
+            );
+            f.render_widget(
+              make_button(
+                watch_input.value(),
+                "Watch",
+                &active,
+                MenuActive::Watch,
+              ),
+              middle_layout[5],
+            );
 
-          make_button(steps_input.value(), "Steps", &active, MenuActive::Steps)
-            .render(middle_layout[3], buf);
-          make_button(break_input.value(), "Break", &active, MenuActive::Break)
-            .render(middle_layout[4], buf);
-          make_button(watch_input.value(), "Watch", &active, MenuActive::Watch)
-            .render(middle_layout[5], buf);
+            f.render_widget(
+              Paragraph::new("").block(Block::bordered().title("IAR")),
+              middle_layout[6],
+            );
 
-          let hex_lcd_layout = Layout::default()
-            .direction(Direction::Horizontal)
-            .constraints(vec![
-              Constraint::Length(6),
-              Constraint::Length(6),
-              Constraint::Length(18),
-              Constraint::Fill(1),
-            ])
-            .split(control_layout[2]);
+            f.render_widget(
+              Paragraph::new(
+                if executor_handler.running.load(Ordering::Relaxed) {
+                  "Running"
+                } else {
+                  "Stopped"
+                },
+              ),
+              middle_layout[7],
+            );
 
-          Paragraph::new("")
-            .block(Block::bordered().title("H7-4"))
-            .render(hex_lcd_layout[0], buf);
-          Paragraph::new("")
-            .block(Block::bordered().title("H3-0"))
-            .render(hex_lcd_layout[1], buf);
+            let hex_lcd_layout = Layout::default()
+              .direction(Direction::Horizontal)
+              .constraints(vec![
+                Constraint::Length(6),
+                Constraint::Length(6),
+                Constraint::Length(18),
+                Constraint::Fill(1),
+              ])
+              .split(control_layout[2]);
 
-          Paragraph::new("")
-            .block(Block::bordered().title("LCD"))
-            .render(hex_lcd_layout[2], buf);
-        })?;
+            f.render_widget(
+              Paragraph::new("").block(Block::bordered().title("H7-4")),
+              hex_lcd_layout[0],
+            );
+            f.render_widget(
+              Paragraph::new("").block(Block::bordered().title("H3-0")),
+              hex_lcd_layout[1],
+            );
+            f.render_widget(
+              Paragraph::new("").block(Block::bordered().title("LCD")),
+              hex_lcd_layout[2],
+            );
 
-        let event = event::read()?;
-        if let event::Event::Key(key) = event {
-          match key.code {
-            event::KeyCode::Char('q') => break Ok(()),
-            event::KeyCode::Tab => active = active.incr(),
-            event::KeyCode::BackTab => active = active.decr(),
-            event::KeyCode::Char(c) => {
-              if c.is_digit(10) {
-                match active {
-                  MenuActive::Steps => {
-                    steps_input.handle_event(&event);
+            f.render_stateful_widget(
+              Table::<NoSelection>::new()
+                .data(&environment)
+                .widths([Constraint::Fill(1); 11])
+                .block(Block::bordered().title("Memory")),
+              major_layout[1],
+              &mut memtable_state,
+            );
+          })?;
+        }
+
+        request_redraw = true;
+        let event = tokio::select! {
+          event = term_event_stream.next() => {
+            let event = event.ok_or_eyre("Crossterm event pipe empty")??;
+            match event {
+              event::Event::Key(key) => match key.code {
+                event::KeyCode::Char('q') => break Ok(()),
+                event::KeyCode::Tab => active = active.incr(),
+                event::KeyCode::BackTab => active = active.decr(),
+                event::KeyCode::Char(c) => {
+                  if c.is_digit(10) {
+                    match active {
+                      MenuActive::Steps => {
+                        steps_input.handle_event(&event);
+                      }
+                      MenuActive::Break => {
+                        break_input.handle_event(&event);
+                      }
+                      MenuActive::Watch => {
+                        watch_input.handle_event(&event);
+                      }
+                      _ => {
+                        request_redraw = false;
+                      }
+                    }
+                  } else {
+                    match c {
+                      'a' => {
+                        active = MenuActive::Assemble;
+                        environment =
+                          Environment::parse(&mut File::open(filepath.clone())?)?;
+                      }
+                      'r' => {
+                        active = MenuActive::Run;
+                        executor_handler.running.store(true, Ordering::Release);
+                      }
+                      'l' => {
+                        active = MenuActive::Load;
+                        executor_handler.running.store(false, Ordering::SeqCst);
+                        log::debug!("awaiting stoppage of executor");
+                        let mut guard = executor_handler.environment.lock().await;
+                        log::debug!("executor stopped successfully, lock acquired");
+                        *guard = environment.clone();
+                        std::mem::drop(guard);
+                      }
+                      'f' => {
+                        state = MenuState::FileSelection;
+                        active = MenuActive::File;
+                      }
+                      _ => {
+                        request_redraw = false;
+                      }
+                    }
                   }
-                  MenuActive::Break => {
-                    break_input.handle_event(&event);
-                  }
-                  MenuActive::Watch => {
-                    watch_input.handle_event(&event);
-                  }
-                  _ => {}
                 }
-              } else {
-                match c {
-                  'a' => {
-                    active = MenuActive::Assemble;
-                    environment =
-                      Environment::parse(&mut File::open(filepath.clone())?)?;
-                  }
-                  'f' => {
-                    state = MenuState::FileSelection;
-                    active = MenuActive::File;
-                  }
-                  _ => {}
+                _ => {
+                  request_redraw = false;
                 }
+              },
+              event::Event::Resize(_, _) => {}
+              _ => {
+                request_redraw = false;
               }
             }
-            _ => {}
+          },
+          _ = executor_handler.rx.recv() => {
+            let guard = executor_handler.environment.lock().await;
+            environment = guard.clone();
+            std::mem::drop(guard);
           }
-        }
+        };
       }
       MenuState::FileSelection => {
         terminal.draw(|f| {
           f.render_widget(&file_explorer.widget(), f.area());
         })?;
 
-        let event = event::read()?;
+        let event = term_event_stream
+          .next()
+          .await
+          .ok_or_eyre("Crossterm event pipe disconnected")??;
         if let event::Event::Key(key) = event {
           match key.code {
             event::KeyCode::Char('q') => break Ok(()),
@@ -239,7 +383,14 @@ fn run(mut terminal: DefaultTerminal) -> eyre::Result<()> {
         file_explorer.handle(&event)?;
       }
     }
-  }
+  };
+
+  executor_handler.running.store(false, Ordering::SeqCst);
+  log::info!("Acquiring guard for death");
+  let _ = executor_handler.environment.lock().await;
+  log::info!("Death guard acquired");
+
+  result
 }
 
 fn make_button<'a>(

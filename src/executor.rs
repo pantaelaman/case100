@@ -1,13 +1,87 @@
-use crate::core::Environment;
+use std::{
+  borrow::BorrowMut,
+  collections::HashSet,
+  sync::{
+    atomic::{AtomicBool, Ordering},
+    Arc,
+  },
+};
 
-pub struct ExecutorManager {}
+use crate::core::{Environment, StepFatal};
+use color_eyre::eyre;
+use tokio::sync::{
+  mpsc::{self, error::TryRecvError},
+  watch, Mutex, RwLock,
+};
+
+pub enum ExecutorMessage {
+  Toggle,
+  Run,
+  Stop,
+  Reset,
+  Die,
+  SetEnv { new_env: Environment },
+}
+
+#[derive(Debug)]
+pub enum ExecutorReport {
+  Failure { error: crate::core::StepFatal },
+}
 
 pub struct Executor {
-  environment: Environment,
+  environment: Arc<Mutex<Environment>>,
+  running: Arc<AtomicBool>,
+  tx: mpsc::Sender<ExecutorReport>,
+}
+
+pub struct ExecutorHandler {
+  pub environment: Arc<Mutex<Environment>>,
+  pub running: Arc<AtomicBool>,
+  pub rx: mpsc::Receiver<ExecutorReport>,
 }
 
 impl Executor {
-  fn new(environment: Environment) -> Self {
-    Executor { environment }
+  pub fn new(environment: Environment) -> (Self, ExecutorHandler) {
+    let environment = Arc::new(Mutex::new(environment));
+    let running = Arc::new(AtomicBool::new(false));
+    let (tx, rx) = mpsc::channel(5);
+    (
+      Executor {
+        environment: environment.clone(),
+        running: running.clone(),
+        tx,
+      },
+      ExecutorHandler {
+        environment,
+        running,
+        rx,
+      },
+    )
+  }
+
+  pub async fn process(self) -> eyre::Result<()> {
+    let mut guard = None;
+    loop {
+      if self.running.load(Ordering::Acquire) {
+        if guard.is_none() {
+          guard = Some(self.environment.lock().await);
+        }
+        let Some(ref mut env) = guard else {
+          unreachable!()
+        };
+
+        match crate::core::step(env) {
+          Err(e) => {
+            std::mem::drop(guard.take());
+            self.running.store(false, Ordering::Release);
+            log::warn!("Step fatal/halted {:?}", e);
+            self.tx.send(ExecutorReport::Failure { error: e }).await?;
+          }
+          _ => {}
+        }
+      } else {
+        tokio::task::yield_now().await;
+      }
+    }
   }
 }

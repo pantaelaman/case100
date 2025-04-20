@@ -1,0 +1,112 @@
+   Compiling byteorder v1.5.0
+   Compiling rat-cursor v1.2.0
+   Compiling ratatui v0.29.0
+   Compiling fxhash v0.2.1
+   Compiling rat-event v1.2.3
+   Compiling rat-reloc v1.1.2
+   Compiling tui-input v0.11.1
+   Compiling ratatui-explorer v0.1.4
+   Compiling rat-focus v1.0.1
+   Compiling rat-scrolled v1.1.1
+   Compiling rat-ftable v1.0.0
+   Compiling case100 v0.1.0 (/home/pantaelaman/Documents/UMich/ENGR/ENGR100/ase100emu)
+error[E0432]: unresolved import `memtable::MemoryData`
+  --> src/main.rs:10:5
+   |
+10 | use memtable::MemoryData;
+   |     ^^^^^^^^^^^^^^^^^^^^ no `MemoryData` in `memtable`
+
+error[E0425]: cannot find value `buf` in this scope
+   --> src/main.rs:138:49
+    |
+138 |           control_block.render(major_layout[0], buf);
+    |                                                 ^^^ not found in this scope
+
+warning: the feature `explicit_tail_calls` is incomplete and may not be safe to use and/or cause compiler crashes
+ --> src/main.rs:1:12
+  |
+1 | #![feature(explicit_tail_calls)]
+  |            ^^^^^^^^^^^^^^^^^^^
+  |
+  = note: see issue #112788 <https://github.com/rust-lang/rust/issues/112788> for more information
+  = note: `#[warn(incomplete_features)]` on by default
+
+warning: unused imports: `f128::consts::E` and `thread::JoinHandle`
+ --> src/main.rs:4:3
+  |
+4 |   f128::consts::E, fs::File, path::PathBuf, sync::atomic::Ordering,
+  |   ^^^^^^^^^^^^^^^
+5 |   thread::JoinHandle, time::SystemTime,
+  |   ^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `executor::ExecutorMessage`
+ --> src/main.rs:9:5
+  |
+9 | use executor::ExecutorMessage;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused imports: `Frame` and `Margin`
+  --> src/main.rs:14:43
+   |
+14 |   layout::{Constraint, Direction, Layout, Margin},
+   |                                           ^^^^^^
+...
+17 |   DefaultTerminal, Frame,
+   |                    ^^^^^
+
+warning: unused import: `Input`
+  --> src/main.rs:20:51
+   |
+20 | use tui_input::{backend::crossterm::EventHandler, Input};
+   |                                                   ^^^^^
+
+warning: unused import: `Canvas`
+ --> src/devices/vga.rs:3:12
+  |
+3 |   render::{Canvas, WindowCanvas},
+  |            ^^^^^^
+
+warning: unused imports: `borrow::BorrowMut` and `collections::HashSet`
+ --> src/executor.rs:2:3
+  |
+2 |   borrow::BorrowMut,
+  |   ^^^^^^^^^^^^^^^^^
+3 |   collections::HashSet,
+  |   ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `StepFatal`
+  --> src/executor.rs:10:32
+   |
+10 | use crate::core::{Environment, StepFatal};
+   |                                ^^^^^^^^^
+
+warning: unused imports: `RwLock`, `error::TryRecvError`, `self`, and `watch`
+  --> src/executor.rs:13:10
+   |
+13 |   mpsc::{self, error::TryRecvError},
+   |          ^^^^  ^^^^^^^^^^^^^^^^^^^
+14 |   watch, Mutex, RwLock,
+   |   ^^^^^         ^^^^^^
+
+error[E0658]: use of unstable library feature 'f128'
+ --> src/main.rs:4:3
+  |
+4 |   f128::consts::E, fs::File, path::PathBuf, sync::atomic::Ordering,
+  |   ^^^^^^^^^^^^^^^
+  |
+  = note: see issue #116909 <https://github.com/rust-lang/rust/issues/116909> for more information
+  = help: add `#![feature(f128)]` to the crate attributes to enable
+  = note: this compiler was built on 2024-10-29; consider upgrading it if it is out of date
+
+warning: unused import: `owo_colors::OwoColorize`
+ --> src/main.rs:8:24
+  |
+8 | use color_eyre::{eyre, owo_colors::OwoColorize};
+  |                        ^^^^^^^^^^^^^^^^^^^^^^^
+
+Some errors have detailed explanations: E0425, E0432, E0658.
+For more information about an error, try `rustc --explain E0425`.
+warning: `case100` (bin "case100") generated 10 warnings
+error: could not compile `case100` (bin "case100") due to 3 previous errors; 10 warnings emitted

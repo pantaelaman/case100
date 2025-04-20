@@ -13,16 +13,17 @@ pub enum StepFatal {
   DivisionByZero,
 }
 
-const MEMORY_SIZE: usize = 16384;
+pub const MEMORY_SIZE: usize = 16384;
 
 #[derive(Default)]
 pub struct StepReport {
   changed: Option<usize>,
 }
 
+#[derive(Clone)]
 pub struct Environment {
   pub iar: usize,
-  pub memory: [i32; 16384],
+  pub memory: Box<[i32; 16384]>,
   poison: bool,
 }
 
@@ -30,7 +31,7 @@ impl Default for Environment {
   fn default() -> Self {
     Environment {
       iar: 0,
-      memory: [0; MEMORY_SIZE],
+      memory: Box::new([0; MEMORY_SIZE]),
       poison: false,
     }
   }
@@ -79,6 +80,14 @@ pub fn step(environment: &mut Environment) -> Result<StepReport, StepFatal> {
   };
 
   let mut branched = false;
+
+  log::info!(
+    "Running instruction {} ({} {} {})",
+    instruction,
+    arg1,
+    arg2,
+    arg3
+  );
 
   match instruction {
     0 => return Err(StepFatal::Halted),
