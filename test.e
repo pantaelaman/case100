@@ -1,10 +1,4 @@
 start
-  cpdata reg 0
-loop
-  add reg reg one
-  call loop void
-  
-
-reg 0
-one 1
-void 0
+  cpdata 0x80000013 'c'
+  cpdata 0x80000010 1
+  halt

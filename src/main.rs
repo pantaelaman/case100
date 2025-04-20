@@ -1,12 +1,19 @@
 use core::Environment;
 use std::{
-  fs::File, path::PathBuf, sync::atomic::Ordering, thread::JoinHandle,
+  fs::File,
+  path::PathBuf,
+  sync::{
+    atomic::{AtomicU16, Ordering},
+    Arc,
+  },
+  thread::JoinHandle,
   time::SystemTime,
 };
 
 use color_eyre::eyre::{self, OptionExt};
 use devices::DeviceArray;
 use executor::ExecutorReport;
+use itertools::Itertools;
 use rat_ftable::{selection::NoSelection, Table, TableState};
 use ratatui::{
   crossterm::event,
@@ -16,6 +23,7 @@ use ratatui::{
   DefaultTerminal, Frame,
 };
 use ratatui_explorer::{FileExplorer, Theme};
+use tokio::sync::Mutex;
 use tokio_stream::StreamExt;
 use tui_input::{backend::crossterm::EventHandler, Input};
 
@@ -51,11 +59,23 @@ async fn main() -> eyre::Result<()> {
   log::info!("Logging harness setup");
 
   let terminal = ratatui::init();
+  let lcd_device = devices::onboard::LcdDisplayDevice::default();
+  let hex_device = devices::onboard::HexDisplayDevice::default();
+
+  let device_refs = TerminalDeviceRefs {
+    hex0: hex_device.hex0.clone(),
+    hex1: hex_device.hex1.clone(),
+    lcd_display: lcd_device.lcd.clone(),
+  };
+
+  let mut device_array = DeviceArray::default();
+  device_array.register_device(Box::new(lcd_device));
+  device_array.register_device(Box::new(hex_device));
   let (exec, executor_handler) =
-    executor::Executor::new(Environment::default(), DeviceArray::default());
+    executor::Executor::new(Environment::default(), device_array);
 
   let _exec_runner = tokio::spawn(exec.process());
-  let result = run(terminal, executor_handler).await;
+  let result = run(terminal, executor_handler, device_refs).await;
 
   ratatui::restore();
 
@@ -108,14 +128,16 @@ impl MenuActive {
   }
 }
 
-enum EventUnion {
-  Crossterm(event::Event),
-  Executor(ExecutorReport),
+struct TerminalDeviceRefs {
+  hex0: Arc<AtomicU16>,
+  hex1: Arc<AtomicU16>,
+  lcd_display: Arc<Mutex<[[char; 14]; 2]>>,
 }
 
 async fn run(
   mut terminal: DefaultTerminal,
   mut executor_handler: executor::ExecutorHandler,
+  device_refs: TerminalDeviceRefs,
 ) -> eyre::Result<()> {
   let theme = Theme::default();
   let mut file_explorer = FileExplorer::with_theme(theme)?;
@@ -139,6 +161,13 @@ async fn run(
     match state {
       MenuState::Normal => {
         if request_redraw {
+          let lcd_text = device_refs
+            .lcd_display
+            .lock()
+            .await
+            .iter()
+            .map(|line| line.iter().collect::<String>())
+            .join("\n");
           terminal.draw(|f| {
             let major_layout = Layout::default()
               .direction(Direction::Vertical)
@@ -271,15 +300,23 @@ async fn run(
               .split(control_layout[2]);
 
             f.render_widget(
-              Paragraph::new("").block(Block::bordered().title("H7-4")),
+              Paragraph::new(format!(
+                "{:04x}",
+                device_refs.hex1.load(Ordering::Relaxed)
+              ))
+              .block(Block::bordered().title("H7-4")),
               hex_lcd_layout[0],
             );
             f.render_widget(
-              Paragraph::new("").block(Block::bordered().title("H3-0")),
+              Paragraph::new(format!(
+                "{:04x}",
+                device_refs.hex0.load(Ordering::Relaxed)
+              ))
+              .block(Block::bordered().title("H3-0")),
               hex_lcd_layout[1],
             );
             f.render_widget(
-              Paragraph::new("").block(Block::bordered().title("LCD")),
+              Paragraph::new(lcd_text).block(Block::bordered().title("LCD")),
               hex_lcd_layout[2],
             );
 
@@ -374,10 +411,18 @@ async fn run(
               }
             }
           },
-          _ = executor_handler.rx.recv() => {
-            let guard = executor_handler.environment.lock().await;
-            environment = guard.clone();
-            std::mem::drop(guard);
+          Some(report) = executor_handler.rx.recv() => {
+            match report {
+              ExecutorReport::Failure { error } => {
+                log::warn!("Received failure report {:?}", error);
+                let guard = executor_handler.environment.lock().await;
+                environment = guard.clone();
+                std::mem::drop(guard);
+              },
+              ExecutorReport::DeviceUpdate => {
+                log::info!("Redrawing due to device update");
+              },
+            }
           }
         };
       }

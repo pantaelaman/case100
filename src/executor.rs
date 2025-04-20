@@ -3,12 +3,13 @@ use std::sync::{
   Arc,
 };
 
-use crate::core::Environment;
+use crate::core::{Environment, StepReport};
 use color_eyre::eyre;
 use tokio::sync::{mpsc, Mutex};
 
 #[derive(Debug)]
 pub enum ExecutorReport {
+  DeviceUpdate,
   Failure { error: crate::core::StepFatal },
 }
 
@@ -60,13 +61,20 @@ impl Executor {
         };
 
         match crate::core::step(env, &mut self.device_array) {
+          Ok(StepReport { changed }) => {
+            if changed
+              .map(|v| v > crate::core::MEMORY_SIZE as u32)
+              .unwrap_or(false)
+            {
+              self.tx.send(ExecutorReport::DeviceUpdate).await?;
+            }
+          }
           Err(e) => {
             std::mem::drop(guard.take());
             self.running.store(false, Ordering::Release);
             log::warn!("Step fatal/halted {:?}", e);
             self.tx.send(ExecutorReport::Failure { error: e }).await?;
           }
-          _ => {}
         }
       } else {
         if guard.is_some() {

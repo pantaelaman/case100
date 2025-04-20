@@ -1,35 +1,53 @@
-[2025-04-20T02:25:37Z [37mINFO[0m case100] Logging harness setup
-[2025-04-20T02:25:41Z [37mDEBUG[0m case100] awaiting stoppage of executor
-[2025-04-20T02:25:41Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
-[2025-04-20T02:25:44Z [37mINFO[0m case100] Acquiring guard for death
-[2025-04-20T02:25:44Z [37mINFO[0m case100] Death guard acquired
-[2025-04-20T02:26:15Z [37mINFO[0m case100] Logging harness setup
-[2025-04-20T02:26:20Z [37mDEBUG[0m case100] awaiting stoppage of executor
-[2025-04-20T02:26:20Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
-[2025-04-20T02:26:30Z [37mINFO[0m case100] Acquiring guard for death
-[2025-04-20T02:26:30Z [37mINFO[0m case100] Death guard acquired
-[2025-04-20T02:29:04Z [37mINFO[0m case100] Logging harness setup
-[2025-04-20T02:29:09Z [37mDEBUG[0m case100] awaiting stoppage of executor
-[2025-04-20T02:29:09Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
-[2025-04-20T02:29:17Z [37mINFO[0m case100] Acquiring guard for death
-[2025-04-20T02:29:17Z [37mINFO[0m case100] Death guard acquired
-[2025-04-20T02:30:10Z [37mINFO[0m case100] Logging harness setup
-[2025-04-20T02:30:13Z [37mDEBUG[0m case100] awaiting stoppage of executor
-[2025-04-20T02:30:13Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
-[2025-04-20T02:30:38Z [37mINFO[0m case100] Acquiring guard for death
-[2025-04-20T02:30:38Z [37mINFO[0m case100] Death guard acquired
-[2025-04-20T02:37:24Z [37mINFO[0m case100] Logging harness setup
-[2025-04-20T02:37:28Z [37mDEBUG[0m case100] awaiting stoppage of executor
-[2025-04-20T02:37:28Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
-[2025-04-20T02:37:41Z [37mINFO[0m case100] Acquiring guard for death
-[2025-04-20T02:37:41Z [37mINFO[0m case100] Death guard acquired
-[2025-04-20T02:38:42Z [37mINFO[0m case100] Logging harness setup
-[2025-04-20T02:38:46Z [37mDEBUG[0m case100] awaiting stoppage of executor
-[2025-04-20T02:38:46Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
-[2025-04-20T02:38:52Z [37mINFO[0m case100] Acquiring guard for death
-[2025-04-20T02:38:52Z [37mINFO[0m case100] Death guard acquired
-[2025-04-20T03:51:21Z [37mINFO[0m case100] Logging harness setup
-[2025-04-20T03:51:25Z [37mDEBUG[0m case100] awaiting stoppage of executor
-[2025-04-20T03:51:25Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
-[2025-04-20T03:51:29Z [37mINFO[0m case100] Acquiring guard for death
-[2025-04-20T03:51:29Z [37mINFO[0m case100] Death guard acquired
+[2025-04-20T13:50:25Z [37mINFO[0m case100] Logging harness setup
+[2025-04-20T13:50:25Z [37mINFO[0m case100::devices] Device array contents: {2147483664: 0, 2147483667: 0, 2147483666: 0, 2147483665: 0}
+[2025-04-20T13:50:27Z [37mDEBUG[0m case100] awaiting stoppage of executor
+[2025-04-20T13:50:27Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
+[2025-04-20T13:50:27Z [37mINFO[0m case100::devices] Seeking to set 0x80000013 (2147483667) to 99
+[2025-04-20T13:50:27Z [37mINFO[0m case100::devices] Devices {2147483664: 0, 2147483667: 0, 2147483666: 0, 2147483665: 0}
+[2025-04-20T13:50:27Z [37mINFO[0m case100::devices] Device index Some(0)
+[2025-04-20T13:50:27Z [37mINFO[0m case100::devices] Seeking to set 0x80000010 (2147483664) to 1
+[2025-04-20T13:50:27Z [37mINFO[0m case100::devices] Devices {2147483664: 0, 2147483667: 0, 2147483666: 0, 2147483665: 0}
+[2025-04-20T13:50:27Z [37mINFO[0m case100::devices] Device index Some(0)
+[2025-04-20T13:50:27Z [33mWARN[0m case100::executor] Step fatal/halted Halted
+[2025-04-20T13:50:27Z [33mWARN[0m case100] Received report Failure { error: Halted }
+[2025-04-20T13:50:35Z [33mWARN[0m case100::executor] Step fatal/halted AlreadyPoisoned
+[2025-04-20T13:50:36Z [37mINFO[0m case100] Acquiring guard for death
+[2025-04-20T13:50:36Z [37mINFO[0m case100] Death guard acquired
+[2025-04-20T14:04:21Z [37mINFO[0m case100] Logging harness setup
+[2025-04-20T14:04:21Z [37mINFO[0m case100::devices] Device array contents: {2147483664: 0, 2147483667: 0, 2147483666: 0, 2147483665: 0}
+[2025-04-20T14:04:21Z [37mINFO[0m case100::devices] Device array contents: {2147483664: 0, 2147483667: 0, 2147483666: 0, 2147483665: 0, 2147483651: 1, 2147483652: 1}
+[2025-04-20T14:04:37Z [37mDEBUG[0m case100] awaiting stoppage of executor
+[2025-04-20T14:04:37Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
+[2025-04-20T14:04:38Z [37mINFO[0m case100::devices] Seeking to set 0x80000013 (2147483667) to 99
+[2025-04-20T14:04:38Z [37mINFO[0m case100::devices] Devices {2147483664: 0, 2147483667: 0, 2147483666: 0, 2147483665: 0, 2147483651: 1, 2147483652: 1}
+[2025-04-20T14:04:38Z [37mINFO[0m case100::devices] Device index Some(0)
+[2025-04-20T14:04:38Z [37mINFO[0m case100::devices] Seeking to set 0x80000010 (2147483664) to 1
+[2025-04-20T14:04:38Z [37mINFO[0m case100::devices] Devices {2147483664: 0, 2147483667: 0, 2147483666: 0, 2147483665: 0, 2147483651: 1, 2147483652: 1}
+[2025-04-20T14:04:38Z [37mINFO[0m case100::devices] Device index Some(0)
+[2025-04-20T14:04:38Z [33mWARN[0m case100::executor] Step fatal/halted Halted
+[2025-04-20T14:04:40Z [33mWARN[0m case100::executor] Step fatal/halted AlreadyPoisoned
+[2025-04-20T14:04:40Z [33mWARN[0m case100] Received report Failure { error: Halted }
+[2025-04-20T14:04:40Z [33mWARN[0m case100] Received report Failure { error: AlreadyPoisoned }
+[2025-04-20T14:04:42Z [37mINFO[0m case100] Acquiring guard for death
+[2025-04-20T14:04:42Z [37mINFO[0m case100] Death guard acquired
+[2025-04-20T15:10:01Z [37mINFO[0m case100] Logging harness setup
+[2025-04-20T15:10:01Z [37mINFO[0m case100::devices] Device array contents: {2147483666: 0, 2147483667: 0, 2147483664: 0, 2147483665: 0}
+[2025-04-20T15:10:01Z [37mINFO[0m case100::devices] Device array contents: {2147483666: 0, 2147483667: 0, 2147483652: 1, 2147483664: 0, 2147483651: 1, 2147483665: 0}
+[2025-04-20T15:10:20Z [37mINFO[0m case100] Acquiring guard for death
+[2025-04-20T15:10:20Z [37mINFO[0m case100] Death guard acquired
+[2025-04-20T15:16:46Z [37mINFO[0m case100] Logging harness setup
+[2025-04-20T15:16:46Z [37mINFO[0m case100::devices] Device array contents: {2147483664: 0, 2147483666: 0, 2147483665: 0, 2147483667: 0}
+[2025-04-20T15:16:46Z [37mINFO[0m case100::devices] Device array contents: {2147483651: 1, 2147483664: 0, 2147483666: 0, 2147483652: 1, 2147483665: 0, 2147483667: 0}
+[2025-04-20T15:16:51Z [37mDEBUG[0m case100] awaiting stoppage of executor
+[2025-04-20T15:16:51Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
+[2025-04-20T15:16:53Z [37mINFO[0m case100::devices] Seeking to set 0x80000013 (2147483667) to 99
+[2025-04-20T15:16:53Z [37mINFO[0m case100::devices] Devices {2147483651: 1, 2147483664: 0, 2147483666: 0, 2147483652: 1, 2147483665: 0, 2147483667: 0}
+[2025-04-20T15:16:53Z [37mINFO[0m case100::devices] Device index Some(0)
+[2025-04-20T15:16:53Z [37mINFO[0m case100::devices] Seeking to set 0x80000010 (2147483664) to 1
+[2025-04-20T15:16:53Z [37mINFO[0m case100::devices] Devices {2147483651: 1, 2147483664: 0, 2147483666: 0, 2147483652: 1, 2147483665: 0, 2147483667: 0}
+[2025-04-20T15:16:53Z [37mINFO[0m case100::devices] Device index Some(0)
+[2025-04-20T15:16:53Z [33mWARN[0m case100::executor] Step fatal/halted Halted
+[2025-04-20T15:16:53Z [37mINFO[0m case100] Redrawing due to device update
+[2025-04-20T15:16:53Z [37mINFO[0m case100] Redrawing due to device update
+[2025-04-20T15:16:55Z [37mINFO[0m case100] Acquiring guard for death
+[2025-04-20T15:16:55Z [37mINFO[0m case100] Death guard acquired

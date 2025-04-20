@@ -8,8 +8,8 @@ pub enum StepFatal {
   Halted,
   AlreadyPoisoned,
   InvalidInstruction { instr: i32 },
-  InvalidIAR { iar: usize },
-  InvalidIndex { index: usize },
+  InvalidIAR { iar: u32 },
+  InvalidIndex { index: u32 },
   DeviceFailure { error: crate::devices::DeviceError },
   DivisionByZero,
 }
@@ -18,12 +18,12 @@ pub const MEMORY_SIZE: usize = 16384;
 
 #[derive(Default)]
 pub struct StepReport {
-  changed: Option<usize>,
+  pub changed: Option<u32>,
 }
 
 #[derive(Clone)]
 pub struct Environment {
-  pub iar: usize,
+  pub iar: u32,
   pub memory: Box<[i32; 16384]>,
   poison: bool,
 }
@@ -71,14 +71,14 @@ pub fn step(
   // if we make it to the end without returning an error, we'll turn this off
   environment.poison = true;
 
-  if environment.iar >= MEMORY_SIZE - 4 {
+  if environment.iar >= MEMORY_SIZE as u32 - 4 {
     return Err(StepFatal::InvalidIAR {
       iar: environment.iar,
     });
   }
 
   let [instruction, arg1, arg2, arg3] =
-    environment.memory[environment.iar..environment.iar + 4]
+    environment.memory[environment.iar as usize..environment.iar as usize + 4]
   else {
     unreachable!()
   };
@@ -94,17 +94,14 @@ pub fn step(
   // );
 
   match instruction {
+    0 => return Err(StepFatal::Halted),
     1 | 2 | 3 | 4 | 6 | 7 | 9 | 10 => {
-      report.changed = Some(arg1 as usize);
-      let arg2v = get_mem(arg2 as usize, environment, device_array)
-        .ok_or(StepFatal::InvalidIndex {
-          index: arg2 as usize,
-        })?
+      report.changed = Some(arg1 as u32);
+      let arg2v = get_mem(arg2 as u32, environment, device_array)
+        .ok_or(StepFatal::InvalidIndex { index: arg2 as u32 })?
         .map_err(|error| StepFatal::DeviceFailure { error })?;
-      let arg3v = get_mem(arg3 as usize, environment, device_array)
-        .ok_or(StepFatal::InvalidIndex {
-          index: arg3 as usize,
-        })?
+      let arg3v = get_mem(arg3 as u32, environment, device_array)
+        .ok_or(StepFatal::InvalidIndex { index: arg3 as u32 })?
         .map_err(|error| StepFatal::DeviceFailure { error })?;
 
       let val = match instruction {
@@ -125,19 +122,15 @@ pub fn step(
         _ => unreachable!(),
       };
 
-      set_mem(arg1 as usize, val, environment, device_array)
-        .ok_or(StepFatal::InvalidIndex {
-          index: arg1 as usize,
-        })?
+      set_mem(arg1 as u32, val, environment, device_array)
+        .ok_or(StepFatal::InvalidIndex { index: arg1 as u32 })?
         .map_err(|error| StepFatal::DeviceFailure { error })?;
     }
     // unaries
     5 | 8 => {
-      report.changed = Some(arg1 as usize);
-      let arg2v = get_mem(arg2 as usize, environment, device_array)
-        .ok_or(StepFatal::InvalidIndex {
-          index: arg2 as usize,
-        })?
+      report.changed = Some(arg1 as u32);
+      let arg2v = get_mem(arg2 as u32, environment, device_array)
+        .ok_or(StepFatal::InvalidIndex { index: arg2 as u32 })?
         .map_err(|error| StepFatal::DeviceFailure { error })?;
 
       let val = match instruction {
@@ -146,48 +139,38 @@ pub fn step(
         _ => unreachable!(),
       };
 
-      set_mem(arg1 as usize, val, environment, device_array)
-        .ok_or(StepFatal::InvalidIndex {
-          index: arg1 as usize,
-        })?
+      set_mem(arg1 as u32, val, environment, device_array)
+        .ok_or(StepFatal::InvalidIndex { index: arg1 as u32 })?
         .map_err(|error| StepFatal::DeviceFailure { error })?;
     }
     // array
     11 | 12 => {
-      let arg3v = get_mem(arg3 as usize, environment, device_array)
-        .ok_or(StepFatal::InvalidIndex {
-          index: arg3 as usize,
-        })?
+      let arg3v = get_mem(arg3 as u32, environment, device_array)
+        .ok_or(StepFatal::InvalidIndex { index: arg3 as u32 })?
         .map_err(|error| StepFatal::DeviceFailure { error })?;
 
-      let index = arg2 + arg3v;
+      let index: u32 = (arg2 + arg3v) as u32;
 
       match instruction {
         11 => {
-          report.changed = Some(arg1 as usize);
-          let indexv = get_mem(index as usize, environment, device_array)
-            .ok_or(StepFatal::InvalidIndex {
-              index: index as usize,
-            })?
+          report.changed = Some(arg1 as u32);
+          let indexv = get_mem(index, environment, device_array)
+            .ok_or(StepFatal::InvalidIndex { index: index })?
             .map_err(|error| StepFatal::DeviceFailure { error })?;
 
-          set_mem(arg1 as usize, indexv, environment, device_array)
-            .ok_or(StepFatal::InvalidIndex {
-              index: arg1 as usize,
-            })?
+          set_mem(arg1 as u32, indexv, environment, device_array)
+            .ok_or(StepFatal::InvalidIndex { index: arg1 as u32 })?
             .map_err(|error| StepFatal::DeviceFailure { error })?;
         }
         12 => {
-          report.changed = Some(index as usize);
-          let arg1v = get_mem(arg1 as usize, environment, device_array)
-            .ok_or(StepFatal::InvalidIndex {
-              index: arg1 as usize,
-            })?
+          report.changed = Some(index);
+          let arg1v = get_mem(arg1 as u32, environment, device_array)
+            .ok_or(StepFatal::InvalidIndex { index: arg1 as u32 })?
             .map_err(|error| StepFatal::DeviceFailure { error })?;
 
-          set_mem(index as usize, arg1v, environment, device_array)
+          set_mem(index as u32, arg1v, environment, device_array)
             .ok_or(StepFatal::InvalidIndex {
-              index: index as usize,
+              index: index as u32,
             })?
             .map_err(|error| StepFatal::DeviceFailure { error })?;
         }
@@ -196,15 +179,11 @@ pub fn step(
     }
     // branches
     13 | 14 | 15 => {
-      let arg2v = get_mem(arg2 as usize, environment, device_array)
-        .ok_or(StepFatal::InvalidIndex {
-          index: arg2 as usize,
-        })?
+      let arg2v = get_mem(arg2 as u32, environment, device_array)
+        .ok_or(StepFatal::InvalidIndex { index: arg2 as u32 })?
         .map_err(|error| StepFatal::DeviceFailure { error })?;
-      let arg3v = get_mem(arg3 as usize, environment, device_array)
-        .ok_or(StepFatal::InvalidIndex {
-          index: arg3 as usize,
-        })?
+      let arg3v = get_mem(arg3 as u32, environment, device_array)
+        .ok_or(StepFatal::InvalidIndex { index: arg3 as u32 })?
         .map_err(|error| StepFatal::DeviceFailure { error })?;
 
       if match instruction {
@@ -213,35 +192,33 @@ pub fn step(
         15 => arg2v < arg3v,
         _ => unreachable!(),
       } {
-        environment.iar = arg1 as usize;
+        environment.iar = arg1 as u32;
         branched = true;
       }
     }
     // call
     16 => {
       set_mem(
-        arg2 as usize,
+        arg2 as u32,
         (environment.iar + 4) as i32,
         environment,
         device_array,
       )
-      .ok_or(StepFatal::InvalidIndex {
-        index: arg2 as usize,
-      })?
+      .ok_or(StepFatal::InvalidIndex { index: arg2 as u32 })?
       .map_err(|error| StepFatal::DeviceFailure { error })?;
 
-      environment.iar = arg1 as usize;
+      report.changed = Some(arg2 as u32);
+
+      environment.iar = arg1 as u32;
       branched = true;
     }
     // ret
     17 => {
-      let arg1v = get_mem(arg1 as usize, environment, device_array)
-        .ok_or(StepFatal::InvalidIndex {
-          index: arg1 as usize,
-        })?
+      let arg1v = get_mem(arg1 as u32, environment, device_array)
+        .ok_or(StepFatal::InvalidIndex { index: arg1 as u32 })?
         .map_err(|error| StepFatal::DeviceFailure { error })?;
 
-      environment.iar = arg1v as usize;
+      environment.iar = arg1v as u32;
       branched = true;
     }
     _ => return Err(StepFatal::InvalidInstruction { instr: instruction }),
@@ -257,27 +234,27 @@ pub fn step(
 }
 
 fn get_mem(
-  addr: usize,
+  addr: u32,
   environment: &Environment,
   device_array: &mut crate::devices::DeviceArray,
 ) -> Option<Result<i32, crate::devices::DeviceError>> {
-  if addr >= MEMORY_SIZE {
+  if addr >= MEMORY_SIZE as u32 {
     device_array.get(addr)
   } else {
-    Some(Ok(environment.memory[addr]))
+    Some(Ok(environment.memory[addr as usize]))
   }
 }
 
 fn set_mem(
-  addr: usize,
+  addr: u32,
   value: i32,
   environment: &mut Environment,
   device_array: &mut crate::devices::DeviceArray,
 ) -> Option<Result<(), crate::devices::DeviceError>> {
-  if addr >= MEMORY_SIZE {
+  if addr >= MEMORY_SIZE as u32 {
     device_array.set(addr, value)
   } else {
-    environment.memory[addr] = value;
+    environment.memory[addr as usize] = value;
     Some(Ok(()))
   }
 }
