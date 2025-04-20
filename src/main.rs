@@ -124,6 +124,7 @@ async fn run(
   let mut steps_input = tui_input::Input::default();
   let mut break_input = tui_input::Input::default();
   let mut watch_input = tui_input::Input::default();
+  let mut assembled_environment = Environment::default();
   let mut environment = Environment::default();
   let mut memtable_state = TableState::new();
   let mut request_redraw = true;
@@ -284,7 +285,7 @@ async fn run(
         }
 
         request_redraw = true;
-        let event = tokio::select! {
+        tokio::select! {
           event = term_event_stream.next() => {
             let event = event.ok_or_eyre("Crossterm event pipe empty")??;
             match event {
@@ -292,6 +293,13 @@ async fn run(
                 event::KeyCode::Char('q') => break Ok(()),
                 event::KeyCode::Tab => active = active.incr(),
                 event::KeyCode::BackTab => active = active.decr(),
+                event::KeyCode::Esc => {
+                  executor_handler.running.store(false, Ordering::SeqCst);
+                  let mut guard = executor_handler.environment.lock().await;
+                  guard.iar = 0;
+                  environment = guard.clone();
+                  std::mem::drop(guard);
+                },
                 event::KeyCode::Char(c) => {
                   if c.is_digit(10) {
                     match active {
@@ -312,14 +320,22 @@ async fn run(
                     match c {
                       'a' => {
                         active = MenuActive::Assemble;
-                        environment =
+                        assembled_environment =
                           Environment::parse(&mut File::open(filepath.clone())?)?;
                       }
                       'r' => {
                         active = MenuActive::Run;
-                        executor_handler.running.store(true, Ordering::Release);
+                        if executor_handler.running.load(Ordering::Acquire) {
+                          executor_handler.running.store(false, Ordering::SeqCst);
+                          let guard = executor_handler.environment.lock().await;
+                          environment = guard.clone();
+                          std::mem::drop(guard);
+                        } else {
+                          executor_handler.running.store(true, Ordering::Release);
+                        }
                       }
                       'l' => {
+                        environment = assembled_environment.clone();
                         active = MenuActive::Load;
                         executor_handler.running.store(false, Ordering::SeqCst);
                         log::debug!("awaiting stoppage of executor");

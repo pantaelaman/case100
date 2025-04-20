@@ -80,6 +80,10 @@ impl Executor {
           _ => {}
         }
       } else {
+        if guard.is_some() {
+          std::mem::drop(guard.take());
+        }
+
         tokio::task::yield_now().await;
       }
     }

@@ -1,56 +1,25 @@
-[2025-04-19T00:22:20Z [37mINFO[0m case100] Logging harness setup
-[2025-04-19T00:22:25Z [37mDEBUG[0m case100] awaiting stoppage of executor
-[2025-04-19T00:22:25Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
-[2025-04-19T00:22:26Z [37mINFO[0m case100::core] Running instruction 4 (8 9 10)
-[2025-04-19T00:22:26Z [37mINFO[0m case100::core] Running instruction 0 (0 0 0)
-[2025-04-19T00:22:26Z [33mWARN[0m case100::executor] Step fatal/halted Halted
-[2025-04-19T00:22:29Z [37mINFO[0m case100] Acquiring guard for death
-[2025-04-19T00:22:29Z [37mINFO[0m case100] Death guard acquired
-[2025-04-19T00:25:06Z [37mINFO[0m case100] Logging harness setup
-[2025-04-19T00:25:26Z [37mINFO[0m case100] Acquiring guard for death
-[2025-04-19T00:25:26Z [37mINFO[0m case100] Death guard acquired
-[2025-04-19T00:25:34Z [37mINFO[0m case100] Logging harness setup
-[2025-04-19T00:25:47Z [37mINFO[0m case100] Acquiring guard for death
-[2025-04-19T00:25:47Z [37mINFO[0m case100] Death guard acquired
-[2025-04-19T00:25:49Z [37mINFO[0m case100] Logging harness setup
-[2025-04-19T00:26:09Z [37mINFO[0m case100] Acquiring guard for death
-[2025-04-19T00:26:09Z [37mINFO[0m case100] Death guard acquired
-[2025-04-19T01:30:15Z [37mINFO[0m case100] Logging harness setup
-[2025-04-19T01:30:36Z [37mDEBUG[0m case100] awaiting stoppage of executor
-[2025-04-19T01:30:36Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
-[2025-04-19T01:30:36Z [37mINFO[0m case100] Acquiring guard for death
-[2025-04-19T01:30:36Z [37mINFO[0m case100] Death guard acquired
-[2025-04-19T01:34:05Z [37mINFO[0m case100] Logging harness setup
-[2025-04-19T01:34:15Z [37mDEBUG[0m case100] awaiting stoppage of executor
-[2025-04-19T01:34:15Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
-[2025-04-19T01:34:29Z [37mINFO[0m case100] Acquiring guard for death
-[2025-04-19T01:34:29Z [37mINFO[0m case100] Death guard acquired
-[2025-04-19T01:38:02Z [37mINFO[0m case100] Logging harness setup
-[2025-04-19T01:38:06Z [37mINFO[0m case100] Acquiring guard for death
-[2025-04-19T01:38:06Z [37mINFO[0m case100] Death guard acquired
-[2025-04-19T01:38:58Z [37mINFO[0m case100] Logging harness setup
-[2025-04-19T01:39:04Z [37mDEBUG[0m case100] awaiting stoppage of executor
-[2025-04-19T01:39:04Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
-[2025-04-19T01:39:04Z [37mINFO[0m case100::core] Running instruction 4 (8 9 10)
-[2025-04-19T01:39:04Z [37mINFO[0m case100::core] Running instruction 0 (0 0 0)
-[2025-04-19T01:39:04Z [33mWARN[0m case100::executor] Step fatal/halted Halted
-[2025-04-19T01:39:08Z [33mWARN[0m case100::executor] Step fatal/halted AlreadyPoisoned
-[2025-04-19T01:39:09Z [37mINFO[0m case100] Acquiring guard for death
-[2025-04-19T01:39:09Z [37mINFO[0m case100] Death guard acquired
-[2025-04-20T01:55:02Z [37mINFO[0m case100] Logging harness setup
-[2025-04-20T01:55:08Z [37mDEBUG[0m case100] awaiting stoppage of executor
-[2025-04-20T01:55:08Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
-[2025-04-20T01:55:09Z [37mINFO[0m case100::core] Running instruction 4 (8 9 10)
-[2025-04-20T01:55:09Z [37mINFO[0m case100::core] Running instruction 0 (0 0 0)
-[2025-04-20T01:55:09Z [33mWARN[0m case100::executor] Step fatal/halted Halted
-[2025-04-20T01:55:11Z [33mWARN[0m case100::executor] Step fatal/halted AlreadyPoisoned
-[2025-04-20T01:55:12Z [37mINFO[0m case100] Acquiring guard for death
-[2025-04-20T01:55:12Z [37mINFO[0m case100] Death guard acquired
-[2025-04-20T02:15:29Z [37mINFO[0m case100] Logging harness setup
-[2025-04-20T02:15:35Z [37mDEBUG[0m case100] awaiting stoppage of executor
-[2025-04-20T02:15:35Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
-[2025-04-20T02:15:36Z [37mINFO[0m case100::core] Running instruction 4 (8 9 10)
-[2025-04-20T02:15:36Z [37mINFO[0m case100::core] Running instruction 0 (0 0 0)
-[2025-04-20T02:15:36Z [33mWARN[0m case100::executor] Step fatal/halted Halted
-[2025-04-20T02:15:40Z [37mINFO[0m case100] Acquiring guard for death
-[2025-04-20T02:15:40Z [37mINFO[0m case100] Death guard acquired
+[2025-04-20T02:25:37Z [37mINFO[0m case100] Logging harness setup
+[2025-04-20T02:25:41Z [37mDEBUG[0m case100] awaiting stoppage of executor
+[2025-04-20T02:25:41Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
+[2025-04-20T02:25:44Z [37mINFO[0m case100] Acquiring guard for death
+[2025-04-20T02:25:44Z [37mINFO[0m case100] Death guard acquired
+[2025-04-20T02:26:15Z [37mINFO[0m case100] Logging harness setup
+[2025-04-20T02:26:20Z [37mDEBUG[0m case100] awaiting stoppage of executor
+[2025-04-20T02:26:20Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
+[2025-04-20T02:26:30Z [37mINFO[0m case100] Acquiring guard for death
+[2025-04-20T02:26:30Z [37mINFO[0m case100] Death guard acquired
+[2025-04-20T02:29:04Z [37mINFO[0m case100] Logging harness setup
+[2025-04-20T02:29:09Z [37mDEBUG[0m case100] awaiting stoppage of executor
+[2025-04-20T02:29:09Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
+[2025-04-20T02:29:17Z [37mINFO[0m case100] Acquiring guard for death
+[2025-04-20T02:29:17Z [37mINFO[0m case100] Death guard acquired
+[2025-04-20T02:30:10Z [37mINFO[0m case100] Logging harness setup
+[2025-04-20T02:30:13Z [37mDEBUG[0m case100] awaiting stoppage of executor
+[2025-04-20T02:30:13Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
+[2025-04-20T02:30:38Z [37mINFO[0m case100] Acquiring guard for death
+[2025-04-20T02:30:38Z [37mINFO[0m case100] Death guard acquired
+[2025-04-20T02:37:24Z [37mINFO[0m case100] Logging harness setup
+[2025-04-20T02:37:28Z [37mDEBUG[0m case100] awaiting stoppage of executor
+[2025-04-20T02:37:28Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
+[2025-04-20T02:37:41Z [37mINFO[0m case100] Acquiring guard for death
+[2025-04-20T02:37:41Z [37mINFO[0m case100] Death guard acquired

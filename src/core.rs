@@ -81,13 +81,13 @@ pub fn step(environment: &mut Environment) -> Result<StepReport, StepFatal> {
 
   let mut branched = false;
 
-  log::info!(
-    "Running instruction {} ({} {} {})",
-    instruction,
-    arg1,
-    arg2,
-    arg3
-  );
+  // log::info!(
+  //   "Running instruction {} ({} {} {})",
+  //   instruction,
+  //   arg1,
+  //   arg2,
+  //   arg3
+  // );
 
   match instruction {
     0 => return Err(StepFatal::Halted),
