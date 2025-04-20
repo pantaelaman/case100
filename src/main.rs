@@ -5,6 +5,7 @@ use std::{
 };
 
 use color_eyre::eyre::{self, OptionExt};
+use devices::DeviceArray;
 use executor::ExecutorReport;
 use rat_ftable::{selection::NoSelection, Table, TableState};
 use ratatui::{
@@ -51,7 +52,7 @@ async fn main() -> eyre::Result<()> {
 
   let terminal = ratatui::init();
   let (exec, executor_handler) =
-    executor::Executor::new(Environment::default());
+    executor::Executor::new(Environment::default(), DeviceArray::default());
 
   let _exec_runner = tokio::spawn(exec.process());
   let result = run(terminal, executor_handler).await;
@@ -197,7 +198,16 @@ async fn run(
             );
 
             f.render_widget(
-              make_button("Run", "[r]", &active, MenuActive::Run),
+              make_button(
+                if executor_handler.running.load(Ordering::Relaxed) {
+                  "Stop"
+                } else {
+                  "Run"
+                },
+                "[r]",
+                &active,
+                MenuActive::Run,
+              ),
               middle_layout[1],
             );
 

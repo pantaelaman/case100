@@ -1,27 +1,11 @@
-use std::{
-  borrow::BorrowMut,
-  collections::HashSet,
-  sync::{
-    atomic::{AtomicBool, Ordering},
-    Arc,
-  },
+use std::sync::{
+  atomic::{AtomicBool, Ordering},
+  Arc,
 };
 
-use crate::core::{Environment, StepFatal};
+use crate::core::Environment;
 use color_eyre::eyre;
-use tokio::sync::{
-  mpsc::{self, error::TryRecvError},
-  watch, Mutex, RwLock,
-};
-
-pub enum ExecutorMessage {
-  Toggle,
-  Run,
-  Stop,
-  Reset,
-  Die,
-  SetEnv { new_env: Environment },
-}
+use tokio::sync::{mpsc, Mutex};
 
 #[derive(Debug)]
 pub enum ExecutorReport {
@@ -32,6 +16,7 @@ pub struct Executor {
   environment: Arc<Mutex<Environment>>,
   running: Arc<AtomicBool>,
   tx: mpsc::Sender<ExecutorReport>,
+  device_array: crate::devices::DeviceArray,
 }
 
 pub struct ExecutorHandler {
@@ -41,7 +26,10 @@ pub struct ExecutorHandler {
 }
 
 impl Executor {
-  pub fn new(environment: Environment) -> (Self, ExecutorHandler) {
+  pub fn new(
+    environment: Environment,
+    device_array: crate::devices::DeviceArray,
+  ) -> (Self, ExecutorHandler) {
     let environment = Arc::new(Mutex::new(environment));
     let running = Arc::new(AtomicBool::new(false));
     let (tx, rx) = mpsc::channel(5);
@@ -50,6 +38,7 @@ impl Executor {
         environment: environment.clone(),
         running: running.clone(),
         tx,
+        device_array,
       },
       ExecutorHandler {
         environment,
@@ -59,7 +48,7 @@ impl Executor {
     )
   }
 
-  pub async fn process(self) -> eyre::Result<()> {
+  pub async fn process(mut self) -> eyre::Result<()> {
     let mut guard = None;
     loop {
       if self.running.load(Ordering::Acquire) {
@@ -70,7 +59,7 @@ impl Executor {
           unreachable!()
         };
 
-        match crate::core::step(env) {
+        match crate::core::step(env, &mut self.device_array) {
           Err(e) => {
             std::mem::drop(guard.take());
             self.running.store(false, Ordering::Release);

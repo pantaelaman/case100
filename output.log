@@ -23,3 +23,13 @@
 [2025-04-20T02:37:28Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
 [2025-04-20T02:37:41Z [37mINFO[0m case100] Acquiring guard for death
 [2025-04-20T02:37:41Z [37mINFO[0m case100] Death guard acquired
+[2025-04-20T02:38:42Z [37mINFO[0m case100] Logging harness setup
+[2025-04-20T02:38:46Z [37mDEBUG[0m case100] awaiting stoppage of executor
+[2025-04-20T02:38:46Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
+[2025-04-20T02:38:52Z [37mINFO[0m case100] Acquiring guard for death
+[2025-04-20T02:38:52Z [37mINFO[0m case100] Death guard acquired
+[2025-04-20T03:51:21Z [37mINFO[0m case100] Logging harness setup
+[2025-04-20T03:51:25Z [37mDEBUG[0m case100] awaiting stoppage of executor
+[2025-04-20T03:51:25Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
+[2025-04-20T03:51:29Z [37mINFO[0m case100] Acquiring guard for death
+[2025-04-20T03:51:29Z [37mINFO[0m case100] Death guard acquired
