@@ -20,7 +20,7 @@ impl DeviceFrame for HexDisplayDevice {
     &[0x80000003, 0x80000004]
   }
 
-  fn set(&mut self, register: u32, value: i32) -> Result<(), DeviceError> {
+  fn set(&mut self, register: u32, value: i32) -> Result<bool, DeviceError> {
     match register {
       0x80000003 => {
         self.hex0.store(value as u16, Ordering::Relaxed);
@@ -31,7 +31,7 @@ impl DeviceFrame for HexDisplayDevice {
       _ => unreachable!(),
     }
 
-    Ok(())
+    Ok(true)
   }
 
   fn get(&mut self, _register: u32) -> Result<i32, DeviceError> {
@@ -57,7 +57,7 @@ impl DeviceFrame for LcdDisplayDevice {
     &mut self,
     register: u32,
     value: i32,
-  ) -> Result<(), super::DeviceError> {
+  ) -> Result<bool, super::DeviceError> {
     if self.turn {
       return Err(DeviceError::Busy);
     }
@@ -81,7 +81,7 @@ impl DeviceFrame for LcdDisplayDevice {
       _ => unreachable!(),
     }
 
-    Ok(())
+    Ok(true)
   }
 
   fn get(&mut self, register: u32) -> Result<i32, super::DeviceError> {

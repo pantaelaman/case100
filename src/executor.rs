@@ -9,21 +9,21 @@ use tokio::sync::{mpsc, Mutex};
 
 #[derive(Debug)]
 pub enum ExecutorReport {
-  DeviceUpdate,
+  Redraw,
   Failure { error: crate::core::StepFatal },
 }
 
 pub struct Executor {
   environment: Arc<Mutex<Environment>>,
   running: Arc<AtomicBool>,
-  tx: mpsc::Sender<ExecutorReport>,
+  tx: mpsc::UnboundedSender<ExecutorReport>,
   device_array: crate::devices::DeviceArray,
 }
 
 pub struct ExecutorHandler {
   pub environment: Arc<Mutex<Environment>>,
   pub running: Arc<AtomicBool>,
-  pub rx: mpsc::Receiver<ExecutorReport>,
+  pub rx: mpsc::UnboundedReceiver<ExecutorReport>,
 }
 
 impl Executor {
@@ -33,7 +33,7 @@ impl Executor {
   ) -> (Self, ExecutorHandler) {
     let environment = Arc::new(Mutex::new(environment));
     let running = Arc::new(AtomicBool::new(false));
-    let (tx, rx) = mpsc::channel(5);
+    let (tx, rx) = mpsc::unbounded_channel();
     (
       Executor {
         environment: environment.clone(),
@@ -61,19 +61,16 @@ impl Executor {
         };
 
         match crate::core::step(env, &mut self.device_array) {
-          Ok(StepReport { changed }) => {
-            if changed
-              .map(|v| v > crate::core::MEMORY_SIZE as u32)
-              .unwrap_or(false)
-            {
-              self.tx.send(ExecutorReport::DeviceUpdate).await?;
+          Ok(StepReport { redraw, .. }) => {
+            if redraw {
+              self.tx.send(ExecutorReport::Redraw)?;
             }
           }
           Err(e) => {
             std::mem::drop(guard.take());
             self.running.store(false, Ordering::Release);
             log::warn!("Step fatal/halted {:?}", e);
-            self.tx.send(ExecutorReport::Failure { error: e }).await?;
+            self.tx.send(ExecutorReport::Failure { error: e })?;
           }
         }
       } else {

@@ -1,53 +1,352 @@
-[2025-04-20T13:50:25Z [37mINFO[0m case100] Logging harness setup
-[2025-04-20T13:50:25Z [37mINFO[0m case100::devices] Device array contents: {2147483664: 0, 2147483667: 0, 2147483666: 0, 2147483665: 0}
-[2025-04-20T13:50:27Z [37mDEBUG[0m case100] awaiting stoppage of executor
-[2025-04-20T13:50:27Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
-[2025-04-20T13:50:27Z [37mINFO[0m case100::devices] Seeking to set 0x80000013 (2147483667) to 99
-[2025-04-20T13:50:27Z [37mINFO[0m case100::devices] Devices {2147483664: 0, 2147483667: 0, 2147483666: 0, 2147483665: 0}
-[2025-04-20T13:50:27Z [37mINFO[0m case100::devices] Device index Some(0)
-[2025-04-20T13:50:27Z [37mINFO[0m case100::devices] Seeking to set 0x80000010 (2147483664) to 1
-[2025-04-20T13:50:27Z [37mINFO[0m case100::devices] Devices {2147483664: 0, 2147483667: 0, 2147483666: 0, 2147483665: 0}
-[2025-04-20T13:50:27Z [37mINFO[0m case100::devices] Device index Some(0)
-[2025-04-20T13:50:27Z [33mWARN[0m case100::executor] Step fatal/halted Halted
-[2025-04-20T13:50:27Z [33mWARN[0m case100] Received report Failure { error: Halted }
-[2025-04-20T13:50:35Z [33mWARN[0m case100::executor] Step fatal/halted AlreadyPoisoned
-[2025-04-20T13:50:36Z [37mINFO[0m case100] Acquiring guard for death
-[2025-04-20T13:50:36Z [37mINFO[0m case100] Death guard acquired
-[2025-04-20T14:04:21Z [37mINFO[0m case100] Logging harness setup
-[2025-04-20T14:04:21Z [37mINFO[0m case100::devices] Device array contents: {2147483664: 0, 2147483667: 0, 2147483666: 0, 2147483665: 0}
-[2025-04-20T14:04:21Z [37mINFO[0m case100::devices] Device array contents: {2147483664: 0, 2147483667: 0, 2147483666: 0, 2147483665: 0, 2147483651: 1, 2147483652: 1}
-[2025-04-20T14:04:37Z [37mDEBUG[0m case100] awaiting stoppage of executor
-[2025-04-20T14:04:37Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
-[2025-04-20T14:04:38Z [37mINFO[0m case100::devices] Seeking to set 0x80000013 (2147483667) to 99
-[2025-04-20T14:04:38Z [37mINFO[0m case100::devices] Devices {2147483664: 0, 2147483667: 0, 2147483666: 0, 2147483665: 0, 2147483651: 1, 2147483652: 1}
-[2025-04-20T14:04:38Z [37mINFO[0m case100::devices] Device index Some(0)
-[2025-04-20T14:04:38Z [37mINFO[0m case100::devices] Seeking to set 0x80000010 (2147483664) to 1
-[2025-04-20T14:04:38Z [37mINFO[0m case100::devices] Devices {2147483664: 0, 2147483667: 0, 2147483666: 0, 2147483665: 0, 2147483651: 1, 2147483652: 1}
-[2025-04-20T14:04:38Z [37mINFO[0m case100::devices] Device index Some(0)
-[2025-04-20T14:04:38Z [33mWARN[0m case100::executor] Step fatal/halted Halted
-[2025-04-20T14:04:40Z [33mWARN[0m case100::executor] Step fatal/halted AlreadyPoisoned
-[2025-04-20T14:04:40Z [33mWARN[0m case100] Received report Failure { error: Halted }
-[2025-04-20T14:04:40Z [33mWARN[0m case100] Received report Failure { error: AlreadyPoisoned }
-[2025-04-20T14:04:42Z [37mINFO[0m case100] Acquiring guard for death
-[2025-04-20T14:04:42Z [37mINFO[0m case100] Death guard acquired
-[2025-04-20T15:10:01Z [37mINFO[0m case100] Logging harness setup
-[2025-04-20T15:10:01Z [37mINFO[0m case100::devices] Device array contents: {2147483666: 0, 2147483667: 0, 2147483664: 0, 2147483665: 0}
-[2025-04-20T15:10:01Z [37mINFO[0m case100::devices] Device array contents: {2147483666: 0, 2147483667: 0, 2147483652: 1, 2147483664: 0, 2147483651: 1, 2147483665: 0}
-[2025-04-20T15:10:20Z [37mINFO[0m case100] Acquiring guard for death
-[2025-04-20T15:10:20Z [37mINFO[0m case100] Death guard acquired
-[2025-04-20T15:16:46Z [37mINFO[0m case100] Logging harness setup
-[2025-04-20T15:16:46Z [37mINFO[0m case100::devices] Device array contents: {2147483664: 0, 2147483666: 0, 2147483665: 0, 2147483667: 0}
-[2025-04-20T15:16:46Z [37mINFO[0m case100::devices] Device array contents: {2147483651: 1, 2147483664: 0, 2147483666: 0, 2147483652: 1, 2147483665: 0, 2147483667: 0}
-[2025-04-20T15:16:51Z [37mDEBUG[0m case100] awaiting stoppage of executor
-[2025-04-20T15:16:51Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
-[2025-04-20T15:16:53Z [37mINFO[0m case100::devices] Seeking to set 0x80000013 (2147483667) to 99
-[2025-04-20T15:16:53Z [37mINFO[0m case100::devices] Devices {2147483651: 1, 2147483664: 0, 2147483666: 0, 2147483652: 1, 2147483665: 0, 2147483667: 0}
-[2025-04-20T15:16:53Z [37mINFO[0m case100::devices] Device index Some(0)
-[2025-04-20T15:16:53Z [37mINFO[0m case100::devices] Seeking to set 0x80000010 (2147483664) to 1
-[2025-04-20T15:16:53Z [37mINFO[0m case100::devices] Devices {2147483651: 1, 2147483664: 0, 2147483666: 0, 2147483652: 1, 2147483665: 0, 2147483667: 0}
-[2025-04-20T15:16:53Z [37mINFO[0m case100::devices] Device index Some(0)
-[2025-04-20T15:16:53Z [33mWARN[0m case100::executor] Step fatal/halted Halted
-[2025-04-20T15:16:53Z [37mINFO[0m case100] Redrawing due to device update
-[2025-04-20T15:16:53Z [37mINFO[0m case100] Redrawing due to device update
-[2025-04-20T15:16:55Z [37mINFO[0m case100] Acquiring guard for death
-[2025-04-20T15:16:55Z [37mINFO[0m case100] Death guard acquired
+[2025-04-22T19:12:46Z [37mINFO[0m case100] Logging harness setup
+[2025-04-22T19:12:46Z [37mINFO[0m case100::devices] Device array contents: {2147483665: 0, 2147483664: 0, 2147483666: 0, 2147483667: 0}
+[2025-04-22T19:12:46Z [37mINFO[0m case100::devices] Device array contents: {2147483652: 1, 2147483665: 0, 2147483664: 0, 2147483666: 0, 2147483667: 0, 2147483651: 1}
+[2025-04-22T19:12:46Z [37mINFO[0m case100::devices] Device array contents: {2147483746: 2, 2147483747: 2, 2147483665: 0, 2147483748: 2, 2147483652: 1, 2147483666: 0, 2147483745: 2, 2147483749: 2, 2147483750: 2, 2147483664: 0, 2147483667: 0, 2147483744: 2, 2147483651: 1}
+[2025-04-22T19:12:46Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:12:46Z [37mINFO[0m case100::sdlcore] Starting SDL process
+[2025-04-22T19:12:46Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T19:12:47Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:12:48Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:12:48Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:12:48Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:12:48Z [37mDEBUG[0m case100] awaiting stoppage of executor
+[2025-04-22T19:12:48Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
+[2025-04-22T19:12:48Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:12:49Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:12:49Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:12:49Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:12:49Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:12:49Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:12:49Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:12:49Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:12:49Z [37mINFO[0m case100::devices::vga] Sending draw command
+[2025-04-22T19:12:49Z [37mINFO[0m case100::sdlcore] Received draw command 0 0 -- 127 479 (16777215)
+[2025-04-22T19:12:49Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T19:16:17Z [37mINFO[0m case100] Logging harness setup
+[2025-04-22T19:16:17Z [37mINFO[0m case100::devices] Device array contents: {2147483667: 0, 2147483664: 0, 2147483665: 0, 2147483666: 0}
+[2025-04-22T19:16:17Z [37mINFO[0m case100::devices] Device array contents: {2147483652: 1, 2147483667: 0, 2147483664: 0, 2147483665: 0, 2147483666: 0, 2147483651: 1}
+[2025-04-22T19:16:17Z [37mINFO[0m case100::devices] Device array contents: {2147483652: 1, 2147483747: 2, 2147483667: 0, 2147483666: 0, 2147483744: 2, 2147483745: 2, 2147483750: 2, 2147483748: 2, 2147483749: 2, 2147483664: 0, 2147483665: 0, 2147483651: 1, 2147483746: 2}
+[2025-04-22T19:16:17Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:17Z [37mINFO[0m case100::sdlcore] Starting SDL process
+[2025-04-22T19:16:17Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T19:16:18Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:19Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:19Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:19Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:20Z [37mDEBUG[0m case100] awaiting stoppage of executor
+[2025-04-22T19:16:20Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
+[2025-04-22T19:16:20Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:20Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:20Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:16:20Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:16:20Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:16:20Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:16:20Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:16:20Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:16:20Z [37mINFO[0m case100::devices::vga] Sending draw command
+[2025-04-22T19:16:20Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:16:20Z [33mWARN[0m case100::executor] Step fatal/halted Halted
+[2025-04-22T19:16:20Z [37mINFO[0m case100::sdlcore] Received draw command 0 0 -- 127 479 (16777215)
+[2025-04-22T19:16:20Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T19:16:22Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:22Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:16:22Z [33mWARN[0m case100::executor] Step fatal/halted AlreadyPoisoned
+[2025-04-22T19:16:22Z [37mINFO[0m case100] Redrawing due to device update
+[2025-04-22T19:16:22Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:24Z [37mINFO[0m case100] Acquiring guard for death
+[2025-04-22T19:16:24Z [37mINFO[0m case100] Death guard acquired
+[2025-04-22T19:16:42Z [37mINFO[0m case100] Logging harness setup
+[2025-04-22T19:16:42Z [37mINFO[0m case100::devices] Device array contents: {2147483666: 0, 2147483665: 0, 2147483667: 0, 2147483664: 0}
+[2025-04-22T19:16:42Z [37mINFO[0m case100::devices] Device array contents: {2147483666: 0, 2147483665: 0, 2147483667: 0, 2147483664: 0, 2147483652: 1, 2147483651: 1}
+[2025-04-22T19:16:42Z [37mINFO[0m case100::devices] Device array contents: {2147483749: 2, 2147483666: 0, 2147483746: 2, 2147483667: 0, 2147483744: 2, 2147483664: 0, 2147483652: 1, 2147483745: 2, 2147483747: 2, 2147483748: 2, 2147483750: 2, 2147483665: 0, 2147483651: 1}
+[2025-04-22T19:16:42Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:42Z [37mINFO[0m case100::sdlcore] Starting SDL process
+[2025-04-22T19:16:42Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T19:16:43Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:43Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:44Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:44Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:44Z [37mDEBUG[0m case100] awaiting stoppage of executor
+[2025-04-22T19:16:44Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
+[2025-04-22T19:16:44Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:45Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:45Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:16:45Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:16:45Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:16:45Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:16:45Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:16:45Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:16:45Z [37mINFO[0m case100::devices::vga] Sending draw command
+[2025-04-22T19:16:45Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:16:45Z [33mWARN[0m case100::executor] Step fatal/halted Halted
+[2025-04-22T19:16:45Z [37mINFO[0m case100::sdlcore] Received draw command 0 0 -- 127 479 (16777215)
+[2025-04-22T19:16:45Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T19:16:47Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:16:47Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:47Z [33mWARN[0m case100::executor] Step fatal/halted AlreadyPoisoned
+[2025-04-22T19:16:47Z [37mINFO[0m case100] Acquiring guard for death
+[2025-04-22T19:16:47Z [37mINFO[0m case100] Death guard acquired
+[2025-04-22T19:16:48Z [37mINFO[0m case100] Logging harness setup
+[2025-04-22T19:16:48Z [37mINFO[0m case100::devices] Device array contents: {2147483665: 0, 2147483666: 0, 2147483664: 0, 2147483667: 0}
+[2025-04-22T19:16:48Z [37mINFO[0m case100::devices] Device array contents: {2147483665: 0, 2147483666: 0, 2147483664: 0, 2147483667: 0, 2147483651: 1, 2147483652: 1}
+[2025-04-22T19:16:48Z [37mINFO[0m case100::devices] Device array contents: {2147483665: 0, 2147483749: 2, 2147483664: 0, 2147483747: 2, 2147483746: 2, 2147483744: 2, 2147483651: 1, 2147483666: 0, 2147483667: 0, 2147483745: 2, 2147483748: 2, 2147483652: 1, 2147483750: 2}
+[2025-04-22T19:16:48Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:48Z [37mINFO[0m case100::sdlcore] Starting SDL process
+[2025-04-22T19:16:48Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T19:16:49Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:50Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:50Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:50Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:50Z [37mDEBUG[0m case100] awaiting stoppage of executor
+[2025-04-22T19:16:50Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
+[2025-04-22T19:16:50Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:51Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:51Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:16:51Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:16:51Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:16:51Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:16:51Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:16:51Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:16:51Z [37mINFO[0m case100::devices::vga] Sending draw command
+[2025-04-22T19:16:51Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:16:51Z [33mWARN[0m case100::executor] Step fatal/halted Halted
+[2025-04-22T19:16:51Z [37mINFO[0m case100::sdlcore] Received draw command 0 0 -- 127 479 (16777215)
+[2025-04-22T19:16:51Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T19:16:52Z [37mINFO[0m case100] Acquiring guard for death
+[2025-04-22T19:16:52Z [37mINFO[0m case100] Death guard acquired
+[2025-04-22T19:16:52Z [37mINFO[0m case100] Logging harness setup
+[2025-04-22T19:16:52Z [37mINFO[0m case100::devices] Device array contents: {2147483667: 0, 2147483664: 0, 2147483666: 0, 2147483665: 0}
+[2025-04-22T19:16:52Z [37mINFO[0m case100::devices] Device array contents: {2147483667: 0, 2147483664: 0, 2147483651: 1, 2147483652: 1, 2147483666: 0, 2147483665: 0}
+[2025-04-22T19:16:52Z [37mINFO[0m case100::devices] Device array contents: {2147483748: 2, 2147483664: 0, 2147483744: 2, 2147483651: 1, 2147483750: 2, 2147483652: 1, 2147483666: 0, 2147483665: 0, 2147483749: 2, 2147483745: 2, 2147483747: 2, 2147483667: 0, 2147483746: 2}
+[2025-04-22T19:16:52Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:52Z [37mINFO[0m case100::sdlcore] Starting SDL process
+[2025-04-22T19:16:52Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T19:16:54Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:54Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:55Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:56Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:56Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:56Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:56Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:56Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:56Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:56Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:56Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:57Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:57Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:57Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:57Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:58Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:59Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:59Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:16:59Z [37mDEBUG[0m case100] awaiting stoppage of executor
+[2025-04-22T19:16:59Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
+[2025-04-22T19:16:59Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:17:00Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:17:00Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:17:00Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:17:00Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:17:00Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:17:00Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:17:00Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:17:00Z [37mINFO[0m case100::devices::vga] Sending draw command
+[2025-04-22T19:17:00Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:17:00Z [33mWARN[0m case100::executor] Step fatal/halted Halted
+[2025-04-22T19:17:00Z [37mINFO[0m case100::sdlcore] Received draw command 0 0 -- 127 479 (16777215)
+[2025-04-22T19:17:00Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T19:17:01Z [37mINFO[0m case100] Acquiring guard for death
+[2025-04-22T19:17:01Z [37mINFO[0m case100] Death guard acquired
+[2025-04-22T19:17:02Z [37mINFO[0m case100] Logging harness setup
+[2025-04-22T19:17:02Z [37mINFO[0m case100::devices] Device array contents: {2147483667: 0, 2147483666: 0, 2147483664: 0, 2147483665: 0}
+[2025-04-22T19:17:02Z [37mINFO[0m case100::devices] Device array contents: {2147483651: 1, 2147483667: 0, 2147483666: 0, 2147483652: 1, 2147483664: 0, 2147483665: 0}
+[2025-04-22T19:17:02Z [37mINFO[0m case100::devices] Device array contents: {2147483746: 2, 2147483748: 2, 2147483666: 0, 2147483652: 1, 2147483664: 0, 2147483665: 0, 2147483744: 2, 2147483667: 0, 2147483745: 2, 2147483747: 2, 2147483749: 2, 2147483651: 1, 2147483750: 2}
+[2025-04-22T19:17:02Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:17:02Z [37mINFO[0m case100::sdlcore] Starting SDL process
+[2025-04-22T19:17:02Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T19:17:04Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:17:04Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:17:04Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:17:05Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:17:05Z [37mDEBUG[0m case100] awaiting stoppage of executor
+[2025-04-22T19:17:05Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
+[2025-04-22T19:17:05Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:17:05Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:17:05Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:17:05Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:17:05Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:17:05Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:17:05Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:17:05Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:17:05Z [37mINFO[0m case100::devices::vga] Sending draw command
+[2025-04-22T19:17:05Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:17:05Z [33mWARN[0m case100::executor] Step fatal/halted Halted
+[2025-04-22T19:17:05Z [37mINFO[0m case100::sdlcore] Received draw command 0 0 -- 127 479 (16777215)
+[2025-04-22T19:17:05Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T19:17:05Z [37mINFO[0m case100] Redrawing due to device update
+[2025-04-22T19:17:05Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:17:05Z [37mINFO[0m case100] Redrawing due to device update
+[2025-04-22T19:17:05Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:17:05Z [37mINFO[0m case100] Redrawing due to device update
+[2025-04-22T19:17:05Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:17:06Z [37mINFO[0m case100] Redrawing due to device update
+[2025-04-22T19:17:06Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:17:06Z [37mINFO[0m case100] Redrawing due to device update
+[2025-04-22T19:17:06Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:17:06Z [37mINFO[0m case100] Redrawing due to device update
+[2025-04-22T19:17:06Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:17:06Z [37mINFO[0m case100] Acquiring guard for death
+[2025-04-22T19:17:06Z [37mINFO[0m case100] Death guard acquired
+[2025-04-22T19:17:07Z [37mINFO[0m case100] Logging harness setup
+[2025-04-22T19:17:07Z [37mINFO[0m case100::devices] Device array contents: {2147483665: 0, 2147483664: 0, 2147483666: 0, 2147483667: 0}
+[2025-04-22T19:17:07Z [37mINFO[0m case100::devices] Device array contents: {2147483651: 1, 2147483665: 0, 2147483652: 1, 2147483664: 0, 2147483666: 0, 2147483667: 0}
+[2025-04-22T19:17:07Z [37mINFO[0m case100::devices] Device array contents: {2147483748: 2, 2147483744: 2, 2147483665: 0, 2147483652: 1, 2147483747: 2, 2147483667: 0, 2147483651: 1, 2147483746: 2, 2147483749: 2, 2147483750: 2, 2147483664: 0, 2147483666: 0, 2147483745: 2}
+[2025-04-22T19:17:07Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:17:07Z [37mINFO[0m case100::sdlcore] Starting SDL process
+[2025-04-22T19:17:07Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T19:17:08Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:17:09Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:17:10Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:17:10Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:17:10Z [37mDEBUG[0m case100] awaiting stoppage of executor
+[2025-04-22T19:17:10Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
+[2025-04-22T19:17:10Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:17:10Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:17:10Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:17:10Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:17:10Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:17:10Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:17:10Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:17:10Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:17:10Z [37mINFO[0m case100::devices::vga] Sending draw command
+[2025-04-22T19:17:10Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:17:10Z [33mWARN[0m case100::executor] Step fatal/halted Halted
+[2025-04-22T19:17:10Z [37mINFO[0m case100::sdlcore] Received draw command 0 0 -- 127 479 (16777215)
+[2025-04-22T19:17:10Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T19:17:10Z [37mINFO[0m case100] Redrawing due to device update
+[2025-04-22T19:17:10Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:17:10Z [37mINFO[0m case100] Redrawing due to device update
+[2025-04-22T19:17:10Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:17:13Z [37mINFO[0m case100] Acquiring guard for death
+[2025-04-22T19:17:13Z [37mINFO[0m case100] Death guard acquired
+[2025-04-22T19:22:38Z [37mINFO[0m case100] Logging harness setup
+[2025-04-22T19:22:38Z [37mINFO[0m case100::devices] Device array contents: {2147483667: 0, 2147483664: 0, 2147483665: 0, 2147483666: 0}
+[2025-04-22T19:22:38Z [37mINFO[0m case100::devices] Device array contents: {2147483667: 0, 2147483652: 1, 2147483664: 0, 2147483665: 0, 2147483666: 0, 2147483651: 1}
+[2025-04-22T19:22:38Z [37mINFO[0m case100::devices] Device array contents: {2147483667: 0, 2147483652: 1, 2147483665: 0, 2147483651: 1, 2147483744: 2, 2147483749: 2, 2147483746: 2, 2147483748: 2, 2147483745: 2, 2147483664: 0, 2147483666: 0, 2147483747: 2, 2147483750: 2}
+[2025-04-22T19:22:38Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:22:38Z [37mINFO[0m case100::sdlcore] Starting SDL process
+[2025-04-22T19:22:38Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T19:22:40Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:22:41Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:22:41Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:22:41Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:22:42Z [37mDEBUG[0m case100] awaiting stoppage of executor
+[2025-04-22T19:22:42Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
+[2025-04-22T19:22:42Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:22:42Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:22:42Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:22:42Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:22:42Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:22:42Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:22:42Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:22:42Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:22:42Z [37mINFO[0m case100::devices::vga] Sending draw command
+[2025-04-22T19:22:42Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:22:42Z [33mWARN[0m case100::executor] Step fatal/halted Halted
+[2025-04-22T19:22:42Z [37mINFO[0m case100::sdlcore] Received draw command 0 0 -- 127 479 (16777215)
+[2025-04-22T19:22:42Z [33mWARN[0m case100] Received failure report Halted
+[2025-04-22T19:22:42Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:22:42Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T19:22:44Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:22:45Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:22:45Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:22:45Z [33mWARN[0m case100::executor] Step fatal/halted AlreadyPoisoned
+[2025-04-22T19:22:45Z [33mWARN[0m case100] Received failure report AlreadyPoisoned
+[2025-04-22T19:22:45Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:22:46Z [37mINFO[0m case100] Acquiring guard for death
+[2025-04-22T19:22:46Z [37mINFO[0m case100] Death guard acquired
+[2025-04-22T19:24:46Z [37mINFO[0m case100] Logging harness setup
+[2025-04-22T19:24:46Z [37mINFO[0m case100::devices] Device array contents: {2147483664: 0, 2147483665: 0, 2147483666: 0, 2147483667: 0}
+[2025-04-22T19:24:46Z [37mINFO[0m case100::devices] Device array contents: {2147483651: 1, 2147483664: 0, 2147483665: 0, 2147483666: 0, 2147483667: 0, 2147483652: 1}
+[2025-04-22T19:24:46Z [37mINFO[0m case100::devices] Device array contents: {2147483651: 1, 2147483664: 0, 2147483665: 0, 2147483745: 2, 2147483667: 0, 2147483748: 2, 2147483747: 2, 2147483749: 2, 2147483652: 1, 2147483746: 2, 2147483750: 2, 2147483666: 0, 2147483744: 2}
+[2025-04-22T19:24:46Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:24:46Z [37mINFO[0m case100::sdlcore] Starting SDL process
+[2025-04-22T19:24:46Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T19:24:48Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:24:48Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:24:48Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:24:49Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:24:49Z [37mDEBUG[0m case100] awaiting stoppage of executor
+[2025-04-22T19:24:49Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
+[2025-04-22T19:24:49Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:24:49Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:24:49Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:24:49Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:24:49Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:24:49Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:24:49Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:24:49Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:24:49Z [37mINFO[0m case100::devices::vga] Sending draw command
+[2025-04-22T19:24:49Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:24:49Z [33mWARN[0m case100::executor] Step fatal/halted Halted
+[2025-04-22T19:24:49Z [37mINFO[0m case100::sdlcore] Received draw command 0 0 -- 127 479 (16777215)
+[2025-04-22T19:24:49Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T19:24:50Z [37mINFO[0m case100] Acquiring guard for death
+[2025-04-22T19:24:50Z [37mINFO[0m case100] Death guard acquired
+[2025-04-22T19:28:07Z [37mINFO[0m case100] Logging harness setup
+[2025-04-22T19:28:07Z [37mINFO[0m case100::devices] Device array contents: {2147483664: 0, 2147483667: 0, 2147483665: 0, 2147483666: 0}
+[2025-04-22T19:28:07Z [37mINFO[0m case100::devices] Device array contents: {2147483664: 0, 2147483667: 0, 2147483651: 1, 2147483665: 0, 2147483666: 0, 2147483652: 1}
+[2025-04-22T19:28:07Z [37mINFO[0m case100::devices] Device array contents: {2147483664: 0, 2147483651: 1, 2147483745: 2, 2147483666: 0, 2147483749: 2, 2147483652: 1, 2147483667: 0, 2147483744: 2, 2147483665: 0, 2147483746: 2, 2147483748: 2, 2147483750: 2, 2147483747: 2}
+[2025-04-22T19:28:07Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:28:07Z [37mINFO[0m case100::sdlcore] Starting SDL process
+[2025-04-22T19:28:07Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T19:28:10Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:28:10Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:28:10Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:28:11Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:28:11Z [37mDEBUG[0m case100] awaiting stoppage of executor
+[2025-04-22T19:28:11Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
+[2025-04-22T19:28:11Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:28:12Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:28:12Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:28:12Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:28:12Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:28:12Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:28:12Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:28:12Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:28:12Z [37mINFO[0m case100::devices::vga] Sending draw command
+[2025-04-22T19:28:12Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:28:12Z [33mWARN[0m case100::executor] Step fatal/halted Halted
+[2025-04-22T19:28:12Z [37mINFO[0m case100::sdlcore] Received draw command 0 0 -- 127 479 (16777215)
+[2025-04-22T19:28:12Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T19:28:12Z [37mINFO[0m case100] Acquiring guard for death
+[2025-04-22T19:28:12Z [37mINFO[0m case100] Death guard acquired
+[2025-04-22T19:29:18Z [37mINFO[0m case100] Logging harness setup
+[2025-04-22T19:29:18Z [37mINFO[0m case100::devices] Device array contents: {2147483664: 0, 2147483665: 0, 2147483667: 0, 2147483666: 0}
+[2025-04-22T19:29:18Z [37mINFO[0m case100::devices] Device array contents: {2147483664: 0, 2147483665: 0, 2147483652: 1, 2147483667: 0, 2147483666: 0, 2147483651: 1}
+[2025-04-22T19:29:18Z [37mINFO[0m case100::devices] Device array contents: {2147483664: 0, 2147483665: 0, 2147483667: 0, 2147483748: 2, 2147483666: 0, 2147483651: 1, 2147483744: 2, 2147483745: 2, 2147483747: 2, 2147483652: 1, 2147483746: 2, 2147483749: 2, 2147483750: 2}
+[2025-04-22T19:29:18Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:29:19Z [37mINFO[0m case100::sdlcore] Starting SDL process
+[2025-04-22T19:29:19Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T19:29:21Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:29:21Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:29:21Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:29:22Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:29:22Z [37mDEBUG[0m case100] awaiting stoppage of executor
+[2025-04-22T19:29:22Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
+[2025-04-22T19:29:22Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:29:22Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:29:22Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:29:22Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:29:22Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:29:22Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:29:22Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:29:22Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:29:22Z [37mINFO[0m case100::devices::vga] Sending draw command
+[2025-04-22T19:29:22Z [37mINFO[0m tracing::span] step;
+[2025-04-22T19:29:22Z [33mWARN[0m case100::executor] Step fatal/halted Halted
+[2025-04-22T19:29:22Z [37mINFO[0m case100::sdlcore] Received draw command 0 0 -- 639 479 (16777215)
+[2025-04-22T19:29:22Z [33mWARN[0m case100] Received failure report Halted
+[2025-04-22T19:29:22Z [37mINFO[0m case100] tui loop start
+[2025-04-22T19:29:22Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T19:29:24Z [37mINFO[0m case100] Acquiring guard for death
+[2025-04-22T19:29:24Z [37mINFO[0m case100] Death guard acquired

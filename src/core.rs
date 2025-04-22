@@ -19,6 +19,7 @@ pub const MEMORY_SIZE: usize = 16384;
 #[derive(Default)]
 pub struct StepReport {
   pub changed: Option<u32>,
+  pub redraw: bool,
 }
 
 #[derive(Clone)]
@@ -57,6 +58,7 @@ impl Environment {
   }
 }
 
+#[tracing::instrument(skip(environment, device_array))]
 pub fn step(
   environment: &mut Environment,
   device_array: &mut crate::devices::DeviceArray,
@@ -122,7 +124,7 @@ pub fn step(
         _ => unreachable!(),
       };
 
-      set_mem(arg1 as u32, val, environment, device_array)
+      report.redraw = set_mem(arg1 as u32, val, environment, device_array)
         .ok_or(StepFatal::InvalidIndex { index: arg1 as u32 })?
         .map_err(|error| StepFatal::DeviceFailure { error })?;
     }
@@ -139,7 +141,7 @@ pub fn step(
         _ => unreachable!(),
       };
 
-      set_mem(arg1 as u32, val, environment, device_array)
+      report.redraw = set_mem(arg1 as u32, val, environment, device_array)
         .ok_or(StepFatal::InvalidIndex { index: arg1 as u32 })?
         .map_err(|error| StepFatal::DeviceFailure { error })?;
     }
@@ -158,9 +160,10 @@ pub fn step(
             .ok_or(StepFatal::InvalidIndex { index: index })?
             .map_err(|error| StepFatal::DeviceFailure { error })?;
 
-          set_mem(arg1 as u32, indexv, environment, device_array)
-            .ok_or(StepFatal::InvalidIndex { index: arg1 as u32 })?
-            .map_err(|error| StepFatal::DeviceFailure { error })?;
+          report.redraw =
+            set_mem(arg1 as u32, indexv, environment, device_array)
+              .ok_or(StepFatal::InvalidIndex { index: arg1 as u32 })?
+              .map_err(|error| StepFatal::DeviceFailure { error })?;
         }
         12 => {
           report.changed = Some(index);
@@ -168,11 +171,12 @@ pub fn step(
             .ok_or(StepFatal::InvalidIndex { index: arg1 as u32 })?
             .map_err(|error| StepFatal::DeviceFailure { error })?;
 
-          set_mem(index as u32, arg1v, environment, device_array)
-            .ok_or(StepFatal::InvalidIndex {
-              index: index as u32,
-            })?
-            .map_err(|error| StepFatal::DeviceFailure { error })?;
+          report.redraw =
+            set_mem(index as u32, arg1v, environment, device_array)
+              .ok_or(StepFatal::InvalidIndex {
+                index: index as u32,
+              })?
+              .map_err(|error| StepFatal::DeviceFailure { error })?;
         }
         _ => unreachable!(),
       }
@@ -198,7 +202,7 @@ pub fn step(
     }
     // call
     16 => {
-      set_mem(
+      report.redraw = set_mem(
         arg2 as u32,
         (environment.iar + 4) as i32,
         environment,
@@ -250,11 +254,11 @@ fn set_mem(
   value: i32,
   environment: &mut Environment,
   device_array: &mut crate::devices::DeviceArray,
-) -> Option<Result<(), crate::devices::DeviceError>> {
+) -> Option<Result<bool, crate::devices::DeviceError>> {
   if addr >= MEMORY_SIZE as u32 {
     device_array.set(addr, value)
   } else {
     environment.memory[addr as usize] = value;
-    Some(Ok(()))
+    Some(Ok(false))
   }
 }

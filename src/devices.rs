@@ -23,11 +23,11 @@ impl DeviceArray {
     &mut self,
     register: u32,
     value: i32,
-  ) -> Option<Result<(), DeviceError>> {
+  ) -> Option<Result<bool, DeviceError>> {
     let register = register & 0xffffffff;
-    log::info!("Seeking to set 0x{:08x} ({register}) to {value}", register);
-    log::info!("Devices {:?}", self.registers);
-    log::info!("Device index {:?}", self.registers.get(&register));
+    // log::info!("Seeking to set 0x{:08x} ({register}) to {value}", register);
+    // log::info!("Devices {:?}", self.registers);
+    // log::info!("Device index {:?}", self.registers.get(&register));
     self
       .registers
       .get(&register)
@@ -52,6 +52,6 @@ pub enum DeviceError {
 
 pub trait DeviceFrame: Send {
   fn registers(&self) -> &'static [u32];
-  fn set(&mut self, register: u32, value: i32) -> Result<(), DeviceError>;
+  fn set(&mut self, register: u32, value: i32) -> Result<bool, DeviceError>;
   fn get(&mut self, register: u32) -> Result<i32, DeviceError>;
 }

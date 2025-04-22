@@ -23,7 +23,7 @@ use ratatui::{
   DefaultTerminal, Frame,
 };
 use ratatui_explorer::{FileExplorer, Theme};
-use tokio::sync::Mutex;
+use tokio::sync::{mpsc, Mutex};
 use tokio_stream::StreamExt;
 use tui_input::{backend::crossterm::EventHandler, Input};
 
@@ -31,6 +31,7 @@ mod core;
 mod devices;
 mod executor;
 mod memtable;
+mod sdlcore;
 
 fn setup_logger() -> eyre::Result<()> {
   let colors = fern::colors::ColoredLevelConfig::default();
@@ -62,6 +63,10 @@ async fn main() -> eyre::Result<()> {
   let lcd_device = devices::onboard::LcdDisplayDevice::default();
   let hex_device = devices::onboard::HexDisplayDevice::default();
 
+  let (draw_cmd_tx, draw_cmd_rx) = mpsc::channel(5);
+
+  let vga_device = devices::vga::VgaDevice::new(draw_cmd_tx);
+
   let device_refs = TerminalDeviceRefs {
     hex0: hex_device.hex0.clone(),
     hex1: hex_device.hex1.clone(),
@@ -71,10 +76,15 @@ async fn main() -> eyre::Result<()> {
   let mut device_array = DeviceArray::default();
   device_array.register_device(Box::new(lcd_device));
   device_array.register_device(Box::new(hex_device));
+  device_array.register_device(Box::new(vga_device));
   let (exec, executor_handler) =
     executor::Executor::new(Environment::default(), device_array);
 
+  // let local_set = tokio::task::LocalSet::new();
+  let _sdl_runner = tokio::spawn(sdlcore::SdlExecutor::run(draw_cmd_rx));
   let _exec_runner = tokio::spawn(exec.process());
+  // let _sdl_runner = tokio::task::spawn_local(sdl_exec.process());
+  // local_set.spawn_local(sdl_exec.process());
   let result = run(terminal, executor_handler, device_refs).await;
 
   ratatui::restore();
@@ -158,6 +168,7 @@ async fn run(
   }};
 
   let result = loop {
+    tracing::info!("tui loop start");
     match state {
       MenuState::Normal => {
         if request_redraw {
@@ -419,11 +430,11 @@ async fn run(
                 environment = guard.clone();
                 std::mem::drop(guard);
               },
-              ExecutorReport::DeviceUpdate => {
-                log::info!("Redrawing due to device update");
+              ExecutorReport::Redraw => {
+                log::info!("Redrawing per executor request");
               },
             }
-          }
+          },
         };
       }
       MenuState::FileSelection => {
