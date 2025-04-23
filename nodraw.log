@@ -1,0 +1,65 @@
+[2025-04-22T20:29:05Z [37mINFO[0m case100] Logging harness setup
+[2025-04-22T20:29:05Z [37mINFO[0m case100::devices] Device array contents: {2147483664: 0, 2147483666: 0, 2147483665: 0, 2147483667: 0}
+[2025-04-22T20:29:05Z [37mINFO[0m case100::devices] Device array contents: {2147483664: 0, 2147483666: 0, 2147483665: 0, 2147483651: 1, 2147483652: 1, 2147483667: 0}
+[2025-04-22T20:29:05Z [37mINFO[0m case100::devices] Device array contents: {2147483750: 2, 2147483666: 0, 2147483747: 2, 2147483665: 0, 2147483651: 1, 2147483652: 1, 2147483744: 2, 2147483664: 0, 2147483749: 2, 2147483746: 2, 2147483745: 2, 2147483667: 0, 2147483748: 2}
+[2025-04-22T20:29:05Z [37mINFO[0m case100] tui loop start
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] Starting SDL process
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:06Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:07Z [37mINFO[0m case100] tui loop start
+[2025-04-22T20:29:07Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:07Z [37mINFO[0m case100::sdlcore] SDL process loop
+[2025-04-22T20:29:07Z [37mINFO[0m case100] tui loop start
+[2025-04-22T20:29:07Z [37mINFO[0m case100] tui loop start
+[2025-04-22T20:29:08Z [37mINFO[0m case100] tui loop start
+[2025-04-22T20:29:08Z [37mDEBUG[0m case100] awaiting stoppage of executor
+[2025-04-22T20:29:08Z [37mDEBUG[0m case100] executor stopped successfully, lock acquired
+[2025-04-22T20:29:08Z [37mINFO[0m case100] tui loop start
+[2025-04-22T20:29:08Z [37mINFO[0m case100] tui loop start
+[2025-04-22T20:29:08Z [37mINFO[0m tracing::span] step;
+[2025-04-22T20:29:08Z [37mINFO[0m tracing::span] step;
+[2025-04-22T20:29:08Z [37mINFO[0m tracing::span] step;
+[2025-04-22T20:29:08Z [37mINFO[0m tracing::span] step;
+[2025-04-22T20:29:08Z [37mINFO[0m tracing::span] step;
+[2025-04-22T20:29:08Z [37mINFO[0m tracing::span] step;
+[2025-04-22T20:29:08Z [37mINFO[0m case100::devices::vga] Sending draw command
+[2025-04-22T20:29:08Z [37mINFO[0m tracing::span] step;
+[2025-04-22T20:29:08Z [33mWARN[0m case100::executor] Step fatal/halted Halted
+[2025-04-22T20:29:08Z [33mWARN[0m case100] Received failure report Halted
+[2025-04-22T20:29:08Z [37mINFO[0m case100] tui loop start
+[2025-04-22T20:29:09Z [37mINFO[0m case100] Acquiring guard for death
+[2025-04-22T20:29:09Z [37mINFO[0m case100] Death guard acquired

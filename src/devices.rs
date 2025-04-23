@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 
+pub mod kbd;
 pub mod onboard;
 pub mod vga;
 

@@ -1,1 +1,5 @@
 start	0	(0x0)
+kbd_wait_loop	28	(0x1c)
+one	44	(0x2c)
+kbd_pressed	45	(0x2d)
+kbd_key	46	(0x2e)

@@ -6,8 +6,7 @@ use std::{
     atomic::{AtomicU16, Ordering},
     Arc,
   },
-  thread::JoinHandle,
-  time::SystemTime,
+  time::{Duration, SystemTime},
 };
 
 use color_eyre::eyre::{self, OptionExt};
@@ -17,15 +16,15 @@ use itertools::Itertools;
 use rat_ftable::{selection::NoSelection, Table, TableState};
 use ratatui::{
   crossterm::event,
-  layout::{Constraint, Direction, Layout, Margin},
+  layout::{Constraint, Direction, Layout},
   style::{Color, Style},
   widgets::{Block, Paragraph, Widget},
-  DefaultTerminal, Frame,
+  DefaultTerminal,
 };
 use ratatui_explorer::{FileExplorer, Theme};
-use tokio::sync::{mpsc, Mutex};
+use tokio::sync::Mutex;
 use tokio_stream::StreamExt;
-use tui_input::{backend::crossterm::EventHandler, Input};
+use tui_input::backend::crossterm::EventHandler;
 
 mod core;
 mod devices;
@@ -63,9 +62,22 @@ async fn main() -> eyre::Result<()> {
   let lcd_device = devices::onboard::LcdDisplayDevice::default();
   let hex_device = devices::onboard::HexDisplayDevice::default();
 
-  let (draw_cmd_tx, draw_cmd_rx) = mpsc::channel(5);
+  let (sdl_pipes_back, sdl_pipes_front) = sdlcore::create_pipes();
 
-  let vga_device = devices::vga::VgaDevice::new(draw_cmd_tx);
+  let vga_device = devices::vga::VgaDevice::new(sdl_pipes_front.draw_cmd_tx);
+  let kbd_device =
+    devices::kbd::KbdDevice::init(sdl_pipes_front.kbd_ev_rx.clone());
+
+  let mut kbd_ev_rx = sdl_pipes_front.kbd_ev_rx;
+  tokio::spawn(async move {
+    loop {
+      kbd_ev_rx.changed().await?;
+      tracing::info!("Key event changed");
+    }
+
+    #[allow(unreachable_code)]
+    eyre::Result::<()>::Ok(())
+  });
 
   let device_refs = TerminalDeviceRefs {
     hex0: hex_device.hex0.clone(),
@@ -77,11 +89,12 @@ async fn main() -> eyre::Result<()> {
   device_array.register_device(Box::new(lcd_device));
   device_array.register_device(Box::new(hex_device));
   device_array.register_device(Box::new(vga_device));
+  device_array.register_device(Box::new(kbd_device));
   let (exec, executor_handler) =
     executor::Executor::new(Environment::default(), device_array);
 
   // let local_set = tokio::task::LocalSet::new();
-  let _sdl_runner = tokio::spawn(sdlcore::SdlExecutor::run(draw_cmd_rx));
+  let _sdl_runner = tokio::spawn(sdlcore::SdlExecutor::run(sdl_pipes_back));
   let _exec_runner = tokio::spawn(exec.process());
   // let _sdl_runner = tokio::task::spawn_local(sdl_exec.process());
   // local_set.spawn_local(sdl_exec.process());
@@ -163,7 +176,10 @@ async fn run(
   let mut request_redraw = true;
   let mut term_event_stream = std::pin::pin! {async_stream::stream! {
     loop {
-      yield event::read();
+      if let Ok(true) = event::poll(Duration::ZERO) {
+        yield event::read();
+      }
+      tokio::task::yield_now().await;
     }
   }};
 
@@ -390,6 +406,7 @@ async fn run(
                           std::mem::drop(guard);
                         } else {
                           executor_handler.running.store(true, Ordering::Release);
+                          executor_handler.notify.notify_waiters();
                         }
                       }
                       'l' => {

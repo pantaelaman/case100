@@ -58,7 +58,7 @@ impl Environment {
   }
 }
 
-#[tracing::instrument(skip(environment, device_array))]
+//#[tracing::instrument(skip(environment, device_array))]
 pub fn step(
   environment: &mut Environment,
   device_array: &mut crate::devices::DeviceArray,

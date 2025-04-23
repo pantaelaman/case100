@@ -5,7 +5,7 @@ use std::sync::{
 
 use crate::core::{Environment, StepReport};
 use color_eyre::eyre;
-use tokio::sync::{mpsc, Mutex};
+use tokio::sync::{mpsc, Mutex, Notify};
 
 #[derive(Debug)]
 pub enum ExecutorReport {
@@ -18,12 +18,14 @@ pub struct Executor {
   running: Arc<AtomicBool>,
   tx: mpsc::UnboundedSender<ExecutorReport>,
   device_array: crate::devices::DeviceArray,
+  notify: Arc<Notify>,
 }
 
 pub struct ExecutorHandler {
   pub environment: Arc<Mutex<Environment>>,
   pub running: Arc<AtomicBool>,
   pub rx: mpsc::UnboundedReceiver<ExecutorReport>,
+  pub notify: Arc<Notify>,
 }
 
 impl Executor {
@@ -34,17 +36,20 @@ impl Executor {
     let environment = Arc::new(Mutex::new(environment));
     let running = Arc::new(AtomicBool::new(false));
     let (tx, rx) = mpsc::unbounded_channel();
+    let notify = Arc::new(Notify::new());
     (
       Executor {
         environment: environment.clone(),
         running: running.clone(),
         tx,
         device_array,
+        notify: notify.clone(),
       },
       ExecutorHandler {
         environment,
         running,
         rx,
+        notify,
       },
     )
   }
@@ -73,12 +78,14 @@ impl Executor {
             self.tx.send(ExecutorReport::Failure { error: e })?;
           }
         }
+
+        tokio::task::yield_now().await;
       } else {
         if guard.is_some() {
           std::mem::drop(guard.take());
         }
 
-        tokio::task::yield_now().await;
+        self.notify.notified().await;
       }
     }
   }
